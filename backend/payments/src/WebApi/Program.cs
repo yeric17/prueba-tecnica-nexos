@@ -35,5 +35,6 @@ var apiGroup = app.MapGroup("/api");
 
 
 apiGroup.MapHealthChecks();
+apiGroup.MapPaymentsEndpoints();
 
 await app.RunAsync();

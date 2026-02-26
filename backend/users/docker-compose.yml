@@ -1,0 +1,31 @@
+services:
+  users-web-api:
+    image: ${DOCKER_REGISTRY-}webapi
+    container_name: users-web-api
+    build:
+      context: .
+      dockerfile: src/Web.Api/Dockerfile
+    depends_on:
+      users-postgres:
+        condition: service_healthy
+    ports:
+      - 5000:8080
+      - 5001:8081
+
+  users-postgres:
+    image: postgres:17
+    container_name: users-postgres
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432

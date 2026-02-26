@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Authentication;
+using Application.Abstractions.Data;
 using Domain.Users;
 using Infrastructure.Authentication;
 using Infrastructure.Database;
@@ -31,13 +32,15 @@ public static class ServiceExtensions
 
         services
             .AddDatabase(configuration)
-            .AddAuthentication(configuration);
+            .AddAuthentication(configuration)
+            .AddServices();
         return services;
     }
 
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddScoped<ITokenProvider, TokenProvider>();
+        services.AddSingleton<ITokenProvider, TokenProvider>();
+        services.AddScoped<IUserContext, UserContext>();
         return services;
     }
 
@@ -76,7 +79,14 @@ public static class ServiceExtensions
                 .UseNpgsql(connectionString, npgsqlOptions =>
                     npgsqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schema.Default))
                 .UseSnakeCaseNamingConvention();
+
+                
                 });
+
+
+        services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+
+
 
         return services;
     }
@@ -131,6 +141,8 @@ public static class ServiceExtensions
         services.AddAuthorization();
 
         services.AddHttpContextAccessor();
+
+        
 
         return services;
 

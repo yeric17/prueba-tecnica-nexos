@@ -1,15 +1,12 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Users;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SharedKernel;
 using SharedKernel.Errors;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Timers;
 
-namespace Application.Users.Register;
+namespace Application.Users;
 
 public sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 {

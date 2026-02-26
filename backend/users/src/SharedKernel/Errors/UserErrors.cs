@@ -31,5 +31,9 @@ namespace SharedKernel.Errors
             code: "InternalServerError",
             description: "An unexpected error occurred. Please try again later.");
 
+        public static Error UserNotFound(Guid userId) => Error.NotFound(
+            code: "UserNotFound",
+            description: $"No user found with ID '{userId}'.");
+
     }
 }

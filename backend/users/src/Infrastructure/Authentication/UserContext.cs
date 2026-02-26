@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Application.Abstractions.Authentication;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Infrastructure.Authentication
 {
-    internal class UserContext
+    internal class UserContext : IUserContext
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 

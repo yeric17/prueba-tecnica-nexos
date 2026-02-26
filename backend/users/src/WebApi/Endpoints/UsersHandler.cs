@@ -1,6 +1,7 @@
 ﻿
 using Application.Abstractions.Messaging;
-using Application.Users.Register;
+using Application.Users;
+using Domain.Users.DTOs;
 using SharedKernel;
 using WebApi.Extensions;
 using WebApi.Infrastructure;
@@ -31,6 +32,16 @@ namespace WebApi.Endpoints
             Result result = await handler.Handle(request, cancellationToken);
 
             return result.Match(Results.Created, CustomResults.Problem);
+        }
+
+        public static async Task<IResult> GetMe(
+            IQueryHandler<GetMeQuery, UserDto> handler,
+            CancellationToken cancellationToken
+            )
+        {
+            var query = new GetMeQuery();
+            Result<UserDto> result = await handler.Handle(query, cancellationToken);
+            return result.Match(Results.Ok, CustomResults.Problem);
         }
     }
 }

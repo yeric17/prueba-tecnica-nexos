@@ -1,6 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 
-namespace Application.Users.Register;
+namespace Application.Users;
 
 public record RegisterUserCommand : ICommand
 {

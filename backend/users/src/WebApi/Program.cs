@@ -1,6 +1,6 @@
 using Application;
-using Domain.Users;
 using WebApi.Endpoints;
+using WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +22,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.ApplyMigrations();
 }
-
-app.MapIdentityApi<User>();
 
 app.UseHttpsRedirection();
 
@@ -35,5 +34,6 @@ app.MapControllers();
 var apiGroup = app.MapGroup("/api");
 
 apiGroup.MapUsersEndpoints();
+apiGroup.MapHealthChecks();
 
 await app.RunAsync();

@@ -10,7 +10,15 @@ using System.Text;
 
 namespace Infrastructure.Database
 {
-    public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<
+        User, 
+        Role, 
+        Guid,
+        UserClaim,
+        UserRole,
+        UserLogin,
+        RoleClaim,
+        UserToken>, IApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

@@ -23,18 +23,18 @@ namespace Application.Users
         {
             var signInManager = _serviceProvider.GetRequiredService<SignInManager<User>>();
 
+            var user = await signInManager.UserManager.FindByEmailAsync(command.Email);
 
-            var result = await signInManager.PasswordSignInAsync(command.Email, command.Password, false, lockoutOnFailure: false);
+            if (user is null)
+            {
+                return UserErrors.Unauthorized;
+            }
+
+            var result = await signInManager.PasswordSignInAsync(user.UserName, command.Password, false, lockoutOnFailure: false);
 
 
             if (result.Succeeded)
             {
-                var user = await signInManager.UserManager.FindByEmailAsync(command.Email);
-
-                if (user is null)
-                {
-                    return UserErrors.InternalServerError;
-                }
 
                 var token = _tokenProvider.Create(user);
                 return new LoginCommandResponse

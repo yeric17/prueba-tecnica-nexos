@@ -4,6 +4,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Infrastructure.Database.Migrations
 {
     /// <inheritdoc />
@@ -157,6 +159,15 @@ namespace Infrastructure.Database.Migrations
                         principalTable: "users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "roles",
+                columns: new[] { "id", "concurrency_stamp", "created_at", "name", "normalized_name" },
+                values: new object[,]
+                {
+                    { new Guid("19ecc225-42c2-4fbd-9a1e-dc1685472957"), "a9a67a90-2b69-4976-8d96-432a74cc86ff", new DateTimeOffset(new DateTime(2026, 2, 26, 15, 12, 43, 366, DateTimeKind.Unspecified).AddTicks(8216), new TimeSpan(0, 0, 0, 0, 0)), "Admin", "ADMIN" },
+                    { new Guid("81323341-c0ba-4a2e-ba04-e0bc676ecd95"), "6da5f32b-1650-4d07-9eed-a4bd06af51e7", new DateTimeOffset(new DateTime(2026, 2, 26, 15, 12, 43, 366, DateTimeKind.Unspecified).AddTicks(7063), new TimeSpan(0, 0, 0, 0, 0)), "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(

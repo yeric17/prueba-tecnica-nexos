@@ -11,6 +11,7 @@ namespace Application.Users;
 public sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 {
     private readonly IServiceProvider _serviceProvider;
+    private string _defaultRole = "User";
 
     private readonly EmailAddressAttribute _emailAddressAttribute;
     public RegisterUserCommandHandler(IServiceProvider serviceProvider)
@@ -22,6 +23,7 @@ public sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCom
     public async Task<Result> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         var userManager = _serviceProvider.GetRequiredService<UserManager<User>>();
+        var roleManager = _serviceProvider.GetRequiredService<RoleManager<Role>>();
 
         if (!userManager.SupportsUserEmail)
         {
@@ -38,11 +40,19 @@ public sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCom
             return UserErrors.InvalidEmail;
         }
 
+        var roleExists = await roleManager.RoleExistsAsync(_defaultRole);
+        if (!roleExists)
+        {
+            return UserErrors.RoleNotFound;
+        }
+
 
         var user = new User();
-        await userStore.SetUserNameAsync(user, email, CancellationToken.None);
-        await emailStore.SetEmailAsync(user, email, CancellationToken.None);
+        await userStore.SetUserNameAsync(user, request.UserName, cancellationToken);
+        await emailStore.SetEmailAsync(user, email, cancellationToken);
         var result = await userManager.CreateAsync(user, request.Password);
+
+        await userManager.AddToRoleAsync(user, _defaultRole);
 
         if (!result.Succeeded)
         {

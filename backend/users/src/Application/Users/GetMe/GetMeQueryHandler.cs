@@ -3,6 +3,7 @@ using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Domain.Users;
 using Domain.Users.DTOs;
+using Microsoft.EntityFrameworkCore;
 using SharedKernel;
 using SharedKernel.Errors;
 
@@ -29,6 +30,17 @@ public class GetMeQueryHandler : IQueryHandler<GetMeQuery, UserDto>
             return UserErrors.UserNotFound(userId);
         }
 
-        return UserDto.FromUser(user);
+        string[] roleNames = await _dbContext.UserRoles
+            .Where(ur => ur.UserId == userId)
+            .Join(_dbContext.Roles,
+                ur => ur.RoleId,
+                r => r.Id,
+                (ur, r) => r.Name!)
+            .ToArrayAsync(cancellationToken);
+
+
+        return UserDto
+            .FromUser(user)
+            .WithRoles(roleNames);
     }
 }

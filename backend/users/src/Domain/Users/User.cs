@@ -7,7 +7,7 @@ namespace Domain.Users
 {
     public class User : IdentityUser<Guid>
     {
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         public User()
         {

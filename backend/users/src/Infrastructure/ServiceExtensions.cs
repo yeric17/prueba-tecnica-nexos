@@ -102,7 +102,9 @@ public static class ServiceExtensions
             options.Password.RequiredLength = 8;
         })
         .AddEntityFrameworkStores<ApplicationDbContext>()
-        .AddDefaultTokenProviders();
+        .AddDefaultTokenProviders()
+        .AddRoleManager<RoleManager<Role>>()
+        .AddUserManager<UserManager<User>>();
 
 
         JwtSettings jwtSettings = new JwtSettings

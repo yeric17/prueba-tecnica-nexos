@@ -16,9 +16,17 @@ namespace WebApi.Endpoints
 
             group.MapPost("/register", RegisterUser)
                 .WithName("RegisterUser")
-                .Produces(StatusCodes.Status201Created)
-                .ProducesProblem(StatusCodes.Status400BadRequest)
-                .ProducesProblem(StatusCodes.Status500InternalServerError);
+                .Produces(StatusCodes.Status201Created);
+
+            group.MapPost("/login", Login)
+                .WithName("LoginUser")
+                .Produces(StatusCodes.Status200OK);
+
+
+            group.MapGet("/me", GetMe)
+                .RequireAuthorization()
+                .WithName("GetMe")
+                .Produces(StatusCodes.Status200OK);
 
             return builder;
         }
@@ -32,6 +40,16 @@ namespace WebApi.Endpoints
             Result result = await handler.Handle(request, cancellationToken);
 
             return result.Match(Results.Created, CustomResults.Problem);
+        }
+
+        public static async Task<IResult> Login(
+            ICommandHandler<LoginCommand,LoginCommandResponse> handler,
+            LoginCommand request,
+            CancellationToken cancellationToken
+            )
+        {
+            Result<LoginCommandResponse> result = await handler.Handle(request, cancellationToken);
+            return result.Match(Results.Ok, CustomResults.Problem);
         }
 
         public static async Task<IResult> GetMe(

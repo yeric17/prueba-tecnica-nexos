@@ -35,5 +35,9 @@ namespace SharedKernel.Errors
             code: "UserNotFound",
             description: $"No user found with ID '{userId}'.");
 
+        public static Error RoleNotFound => Error.Conflict(
+            code: "RoleNotFound",
+            description: "The specified role was not found.");
+
     }
 }

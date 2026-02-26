@@ -1,3 +1,5 @@
+name: nexos-app
+
 services:
   gateway-webapi:
     image: ${DOCKER_REGISTRY-}gateway-webapi
@@ -7,6 +9,10 @@ services:
     build:
       context: .
       dockerfile: src/WebApi/Dockerfile
+    depends_on:
+      - users-webapi
+      - orders-webapi
+      - payments-webapi
     ports:
       - 6000:8080
   
@@ -21,8 +27,7 @@ services:
     depends_on:
       postgres-users:
         condition: service_healthy
-    ports:
-      - 6010:8080
+    # Sin exposición de puertos - solo accesible internamente via gateway
   orders-webapi:
     image: ${DOCKER_REGISTRY-}orders-webapi
     container_name: orders-webapi
@@ -34,8 +39,7 @@ services:
     depends_on:
       postgres-orders:
         condition: service_healthy
-    ports:
-      - 6020:8080
+    # Sin exposición de puertos - solo accesible internamente via gateway
   payments-webapi:
     image: ${DOCKER_REGISTRY-}payments-webapi
     container_name: payments-webapi
@@ -47,8 +51,7 @@ services:
     depends_on:
       postgres-payments:
         condition: service_healthy
-    ports:
-      - 6030:8080
+    # Sin exposición de puertos - solo accesible internamente via gateway
   postgres-users:
     image: postgres:17
     container_name: postgres-users
@@ -57,9 +60,9 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
       interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
     volumes:
       - ./.containers/users/db:/var/lib/postgresql/data
     ports:
@@ -72,9 +75,9 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
       interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
     volumes:
       - ./.containers/orders/db:/var/lib/postgresql/data         
     ports:
@@ -87,9 +90,9 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
       interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
     volumes:
       - ./.containers/payments/db:/var/lib/postgresql/data        
     ports:

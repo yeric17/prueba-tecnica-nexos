@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Domain.Orders.DTOs
 {
-    public class CreateOrderDto
+    public class UpdateOrderDto
     {
-        public Guid UserId { get; set; }
         public List<OrderItemDto> Items { get; set; } = new();
+        public string Status { get; set; } = string.Empty;
         public string? ShippingAddress { get; set; }
         public string? ShippingCity { get; set; }
         public string? ShippingCountry { get; set; }

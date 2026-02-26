@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public Guid OrderNumber { get; set; }
-        public string UserId { get; set; } = string.Empty;
+        public Guid UserId { get; set; }
         public decimal TotalAmount { get; set; }
         public string Status { get; set; } = string.Empty;
         public DateTimeOffset CreatedAt { get; set; }

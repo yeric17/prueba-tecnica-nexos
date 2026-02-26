@@ -6,7 +6,6 @@
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
 
-        public decimal Total => Quantity * UnitPrice;
         public static OrderItemDto FromOrderItem(OrderItem item)
         {
             return new OrderItemDto

@@ -10,7 +10,7 @@ services:
         condition: service_healthy
     ports:
       - 5000:8080
-
+      - 5001:8081
   orders-postgres:
     image: postgres:17
     container_name: orders-postgres

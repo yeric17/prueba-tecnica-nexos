@@ -7,35 +7,24 @@ namespace Domain.Orders
 {
     public class Order
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; private set; }
 
-        public string UserId { get; set; } = string.Empty;
+        public Guid UserId { get; private set; }
 
-        public Guid OrderNumber { get; set; }
-        public string Status { get; set; } = "Pending"; // Pending, Completed, Cancelled
-        public DateTimeOffset CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTimeOffset? UpdatedAt { get; set; }
+        public Guid OrderNumber { get; private set; }
+        public string Status { get; private set; } = "Pending"; // Pending, Completed, Cancelled
+        public DateTimeOffset CreatedAt { get; private set; } = DateTime.UtcNow;
+        public DateTimeOffset? UpdatedAt { get; private set; }
 
-        public string? ShippingAddress { get; set; }
-        public string? ShippingCity { get; set; }
-        public string? ShippingCountry { get; set; }
+        public string? ShippingAddress { get; private set; }
+        public string? ShippingCity { get; private set; }
+        public string? ShippingCountry { get; private set; }
 
         #region Navigation Properties
-        public List<OrderItem> Items { get; set; } = new();
+        public List<OrderItem> Items { get; private set; } = new();
         #endregion
 
-        public decimal TotalAmount
-        {
-            get
-            {
-                decimal total = 0;
-                foreach (var item in Items)
-                {
-                    total += item.Subtotal;
-                }
-                return total;
-            }
-        }
+        public decimal TotalAmount { get; private set; }
 
         private Order() { }
 
@@ -46,9 +35,30 @@ namespace Domain.Orders
             ShippingCity = dto.ShippingCity;
             ShippingCountry = dto.ShippingCountry;
             OrderNumber = Guid.NewGuid();
+            Items = dto.Items
+                .Select(item => new OrderItem(Id, item.ProductName, item.Quantity, item.UnitPrice))
+                .ToList();
+
+            TotalAmount = Items.Sum(i => i.Subtotal);
 
             CreatedAt = DateTimeOffset.UtcNow;
             UpdatedAt = DateTimeOffset.UtcNow;
+        }
+
+        public void Update(UpdateOrderDto dto)
+        {
+            ShippingAddress = dto.ShippingAddress;
+            ShippingCity = dto.ShippingCity;
+            ShippingCountry = dto.ShippingCountry;
+            Status = dto.Status;
+            UpdatedAt = DateTimeOffset.UtcNow;
+
+
+            Items = dto.Items
+                .Select(item => new OrderItem(Id, item.ProductName, item.Quantity, item.UnitPrice))
+                .ToList();
+
+            TotalAmount = Items.Sum(i => i.Subtotal);
         }
 
     }

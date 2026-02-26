@@ -13,8 +13,8 @@ namespace Infrastructure.Database
         {
         }
 
-        public DbSet<Order> Orders { get; }
-        public DbSet<OrderItem> OrderItems { get; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);

@@ -15,7 +15,7 @@ namespace Application.Users
 
         public LoginCommandHandler(IServiceProvider sp, ITokenProvider tokenProvider)
         {
-            this._serviceProvider = sp;
+            _serviceProvider = sp;
             _tokenProvider = tokenProvider;
         }
 

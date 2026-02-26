@@ -31,4 +31,4 @@ RUN dotnet publish "./Payments.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/pu
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "WebApi.dll"]
+ENTRYPOINT ["dotnet", "Payments.WebApi.dll"]

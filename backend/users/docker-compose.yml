@@ -28,4 +28,4 @@ services:
     volumes:
       - ./.containers/db:/var/lib/postgresql/data
     ports:
-      - ${DB_PORT}:${DB_PORT}
+      - 5432:5432

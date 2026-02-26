@@ -1,7 +1,12 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/Application/Application.csproj" Id="7dcfd233-371e-4516-9048-f17efc1c37c1" />
-    <Project Path="src/Infrastructure/Infrastructure.csproj" Id="c63f46c3-b736-4763-b197-e43da7bdeda8" />
-    <Project Path="src/WebApi/WebApi.csproj" Id="ed46dcc4-e74e-4ceb-a0d8-27dcf4c95eae" />
+  <Folder Name="/Solution Items/">
+    <File Path=".env" />
+    <File Path="Directory.Packages.props" />
   </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/WebApi/Gateway.WebApi.csproj" />
+  </Folder>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
 </Solution>

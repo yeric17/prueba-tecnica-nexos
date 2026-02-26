@@ -1,10 +1,10 @@
 services:
-  users-web-api:
-    image: ${DOCKER_REGISTRY-}webapi
-    container_name: users-web-api
+  users-webapi:
+    image: ${DOCKER_REGISTRY-}users-webapi
+    container_name: users-webapi
     build:
       context: .
-      dockerfile: src/Web.Api/Dockerfile
+      dockerfile: src/WebApi/Dockerfile
     depends_on:
       users-postgres:
         condition: service_healthy
@@ -28,4 +28,4 @@ services:
     volumes:
       - ./.containers/db:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - ${DB_PORT}:${DB_PORT}

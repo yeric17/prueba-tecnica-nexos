@@ -1,0 +1,40 @@
+@WebApi_HostAddress = http://localhost:5000
+@WebApi_HostAddress_Https = https://localhost:5001
+
+@AuthToken = YOUR_TOKEN_HERE
+
+### Health Check
+GET {{WebApi_HostAddress}}/api/health
+Accept: application/json
+
+###
+
+### Register User
+POST {{WebApi_HostAddress}}/api/users/register
+Content-Type: application/json
+
+{
+  "userName": "testuser",
+  "email": "testuser@example.com",
+  "password": "Test@123456"
+}
+
+###
+
+### Login
+POST {{WebApi_HostAddress}}/api/users/login
+Content-Type: application/json
+
+{
+  "email": "testuser@example.com",
+  "password": "Test@123456"
+}
+
+###
+
+### Get Current User (GetMe) - Requires Authentication
+GET {{WebApi_HostAddress}}/api/users/me
+Accept: application/json
+Authorization: Bearer {{AuthToken}}
+
+###

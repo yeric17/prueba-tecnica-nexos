@@ -1,0 +1,30 @@
+services:
+  orders-webapi:
+    image: ${DOCKER_REGISTRY-}orders-webapi
+    container_name: orders-webapi
+    build:
+      context: .
+      dockerfile: src/WebApi/Dockerfile
+    depends_on:
+      orders-postgres:
+        condition: service_healthy
+    ports:
+      - 5000:8080
+
+  orders-postgres:
+    image: postgres:17
+    container_name: orders-postgres
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - ${DB_PORT}:${DB_PORT}

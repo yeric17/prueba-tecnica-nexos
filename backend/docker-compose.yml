@@ -5,9 +5,9 @@ services:
     image: ${DOCKER_REGISTRY-}gateway-webapi
     container_name: gateway-webapi
     env_file:
-      - ./backend/gateway/.env
+      - ./gateway/.env
     build:
-      context: ./backend/gateway
+      context: ./gateway
       dockerfile: src/WebApi/Dockerfile
     depends_on:
       - users-webapi
@@ -20,9 +20,9 @@ services:
     image: ${DOCKER_REGISTRY-}users-webapi
     container_name: users-webapi
     env_file:
-      - ./backend/users/.env
+      - ./users/.env
     build:
-      context: ./backend/users
+      context: ./users
       dockerfile: src/WebApi/Dockerfile
     depends_on:
       postgres-users:
@@ -32,9 +32,9 @@ services:
     image: ${DOCKER_REGISTRY-}orders-webapi
     container_name: orders-webapi
     env_file:
-      - ./backend/orders/.env
+      - ./orders/.env
     build:
-      context: ./backend/orders
+      context: ./orders
       dockerfile: src/WebApi/Dockerfile
     depends_on:
       postgres-orders:
@@ -44,9 +44,9 @@ services:
     image: ${DOCKER_REGISTRY-}payments-webapi
     container_name: payments-webapi
     env_file:
-      - ./backend/payments/.env
+      - ./payments/.env
     build:
-      context: ./backend/payments
+      context: ./payments
       dockerfile: src/WebApi/Dockerfile
     depends_on:
       postgres-payments:
@@ -56,7 +56,7 @@ services:
     image: postgres:17
     container_name: postgres-users
     env_file:
-      - ./backend/users/.env
+      - ./users/.env
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
       interval: 5s
@@ -64,14 +64,14 @@ services:
       retries: 15
       start_period: 30s
     volumes:
-      - ./backend/gateway/.containers/users/db:/var/lib/postgresql/data
+      - ./gateway/.containers/users/db:/var/lib/postgresql/data
     ports:
       - 5432:5432
   postgres-orders:
     image: postgres:17
     container_name: postgres-orders
     env_file:
-      - ./backend/orders/.env
+      - ./orders/.env
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
       interval: 5s
@@ -79,14 +79,14 @@ services:
       retries: 15
       start_period: 30s
     volumes:
-      - ./backend/gateway/.containers/orders/db:/var/lib/postgresql/data         
+      - ./gateway/.containers/orders/db:/var/lib/postgresql/data         
     ports:
       - 5433:5432
   postgres-payments:
     image: postgres:17
     container_name: postgres-payments
     env_file:
-      - ./backend/payments/.env
+      - ./payments/.env
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
       interval: 5s
@@ -94,6 +94,6 @@ services:
       retries: 15
       start_period: 30s
     volumes:
-      - ./backend/gateway/.containers/payments/db:/var/lib/postgresql/data        
+      - ./gateway/.containers/payments/db:/var/lib/postgresql/data        
     ports:
       - 5434:5432

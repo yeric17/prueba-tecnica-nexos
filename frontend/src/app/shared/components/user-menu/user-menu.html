@@ -1,0 +1,37 @@
+<button
+  ngMenuTrigger
+  #origin
+  #trigger="ngMenuTrigger"
+  [menu]="formatMenu()"
+  type="button"
+  aria-haspopup="menu"
+  [attr.aria-expanded]="trigger.expanded()"
+  aria-label="Abrir menú de usuario"
+>
+  <ng-content></ng-content>
+  
+</button>
+<ng-template
+  [cdkConnectedOverlayOpen]="trigger.expanded()"
+  [cdkConnectedOverlay]="{origin, usePopover: 'inline'}"
+  [cdkConnectedOverlayPositions]="[
+    {originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4},
+  ]"
+  cdkAttachPopoverAsChild
+>
+  <div ngMenu class="menu" #formatMenu="ngMenu">
+    <ng-template ngMenuContent>
+      <div ngMenuItem value="theme-toggle" (click)="toggleTheme()">
+        <span class="icon material-symbols-outlined" translate="no" aria-hidden="true">
+          {{ theme() === 'dark' ? 'light_mode' : 'dark_mode' }}
+        </span>
+        <span class="label">Tema {{ theme() === 'dark' ? 'claro' : 'oscuro' }}</span>
+      </div>
+      <div class="separator" role="presentation"></div>
+      <div ngMenuItem value="logout">
+        <span class="icon material-symbols-outlined" translate="no" aria-hidden="true">logout</span>
+        <span class="label">Cerrar sesión</span>
+      </div>
+    </ng-template>
+  </div>
+</ng-template>

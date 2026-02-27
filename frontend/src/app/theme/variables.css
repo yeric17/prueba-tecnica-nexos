@@ -1,5 +1,6 @@
-:root{
-    
+:root,
+:root[data-theme='light']{
+    /* Spacing scale */
     --spacing-2xs: .25rem;
     --spacing-xs: .5rem;
     --spacing-sm: .75rem;
@@ -8,31 +9,74 @@
     --spacing-xl: 1.75rem;
     --spacing-2xl: 2.5rem;
 
+    /* Typography */
     --font-family: 'Roboto';
-
+    --font-size-sm: .75rem;
     --font-size-md: 1rem;
     --font-size-lg: 1.5rem;
-    --font-size-sm: .75rem;
     --font-size-xl: 2rem;
 
+    /* Radii */
     --border-radius-sm: .25rem;
     --border-radius-md: .5rem;
 
-
-    /*Colors*/
-
+    /* Palette */
     --color-primary: #fb8500;
     --color-primary-contrast: #fff;
-    --color-primary-accent: #fb8500;
+    --color-primary-accent: #ffb703;
     --color-secondary: #219ebc;
     --color-secondary-contrast: #fff;
     --color-secondary-light: #8ecae6;
-    --color-secondary-light-contrast: #000;
+    --color-secondary-light-contrast: #0b1a2b;
     --color-secondary-dark: #023047;
+    --color-success: #2d9d78;
+    --color-error: #d64545;
 
-    /*Forms*/
+    /* Semantic surfaces */
+    --surface-base: #f8fafc;
+    --surface-card: #ffffff;
+    --surface-muted: #edf2f7;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-inverse: #ffffff;
+    --border-color: #d4d7dd;
 
+    /* Forms */
     --input-height: 2.5rem;
-    --input-border: 1px solid #ccc;
+    --input-border: 1px solid var(--border-color);
+    --input-background: #fff;
+    --input-background-muted: #f1f5f9;
+    --focus-ring: 0 0 0 2px rgba(2, 48, 71, 0.35);
+
+    /* Elevation */
+    --shadow-soft: 0 12px 30px rgba(15, 25, 55, 0.08);
+}
+
+:root[data-theme='dark']{
+    --color-primary: #ffb703;
+    --color-primary-contrast: #1b1b1b;
+    --color-primary-accent: #ffd166;
+    --color-secondary: #8ecae6;
+    --color-secondary-contrast: #0f1b2d;
+    --color-secondary-light: #a9d8f0;
+    --color-secondary-light-contrast: #0f1b2d;
+    --color-secondary-dark: #0b1a2b;
+    --color-success: #4ade80;
+    --color-error: #f87171;
+
+    --surface-base: #0b1120;
+    --surface-card: #111a2c;
+    --surface-muted: #19233b;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5f5;
+    --text-inverse: #0f172a;
+    --border-color: #243352;
+
+    --input-background: #111a2c;
+    --input-background-muted: #1a2337;
+    --input-border: 1px solid #2f3f63;
+    --focus-ring: 0 0 0 2px rgba(142, 202, 230, 0.55);
+
+    --shadow-soft: 0 18px 38px rgba(3, 6, 18, 0.7);
 }
 

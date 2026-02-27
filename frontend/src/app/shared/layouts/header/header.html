@@ -1,0 +1,19 @@
+<header class="app-header" role="banner">
+	<div class="app-header__brand">
+		<div class="app-header__brand-text">
+			<p class="app-header__title">Nexos Market</p>
+		</div>
+	</div>
+
+	<div class="app-header__actions">
+        <app-user-menu>
+            <div class="user-chip" aria-label="Perfil de usuario">
+                <div class="user-chip__details">
+                    <span class="user-chip__name">{{ displayName() }}</span>
+                    <span class="user-chip__email">{{ userEmail() }}</span>
+                </div>
+                <span class="user-chip__avatar" aria-hidden="true">{{ userInitials() }}</span>
+            </div>
+        </app-user-menu>
+	</div>
+</header>

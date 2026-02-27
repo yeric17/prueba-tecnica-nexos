@@ -1,0 +1,108 @@
+:host{
+	display: block;
+	width: 100%;
+}
+
+.app-header{
+	display: grid;
+	grid-template-columns: 1fr auto;
+
+	gap: var(--spacing-xl);
+	padding-inline: var(--spacing-lg);
+    padding-block: var(--spacing-sm);
+	background-color: var(--surface-card);
+	color: var(--text-primary);
+	border-bottom: 1px solid var(--border-color);
+	box-shadow: var(--shadow-soft);
+}
+
+.app-header__brand{
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-md);
+}
+
+.app-header__logo{
+	width: 2.75rem;
+	height: 2.75rem;
+	border-radius: var(--border-radius-md);
+	background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+	color: var(--text-inverse);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	letter-spacing: .05em;
+}
+
+.app-header__brand-text{
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-2xs);
+}
+
+.app-header__title{
+	margin: 0;
+	font-size: var(--font-size-lg);
+	font-weight: 600;
+}
+
+.app-header__subtitle{
+	margin: 0;
+	font-size: var(--font-size-sm);
+	color: var(--text-secondary);
+}
+
+.app-header__actions{
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-lg);
+}
+
+.user-chip{
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-sm);
+	padding: var(--spacing-xs) var(--spacing-md);
+	border-radius: var(--border-radius-md);
+
+	background-color: var(--surface-muted);
+}
+
+.user-chip__avatar{
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: 50%;
+	background-color: var(--color-secondary);
+	color: var(--color-secondary-contrast);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+}
+
+.user-chip__details{
+	display: flex;
+	flex-direction: column;
+    align-items: flex-end;
+	gap: var(--spacing-2xs);
+}
+
+.user-chip__name{
+	font-weight: 600;
+	color: var(--text-primary);
+}
+
+.user-chip__email{
+	font-size: var(--font-size-sm);
+	color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+
+
+	.app-header__actions{
+		width: 100%;
+		justify-content: space-between;
+	}
+}

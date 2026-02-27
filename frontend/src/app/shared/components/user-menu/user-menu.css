@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
+
+:host {
+    display: inline-flex;
+    justify-content: center;
+    font-family: var(--font-family);
+    color: var(--text-primary);
+}
+
+[ngMenuTrigger] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: 0;
+    border-radius: var(--border-radius-md);
+    border: none;
+    background-color: var(--surface-muted);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+[ngMenuTrigger]:hover {
+    background-color: var(--surface-base);
+}
+
+[ngMenuTrigger]:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+[ngMenuTrigger] .icon {
+    font-size: 1.25rem;
+    opacity: 0.9;
+}
+
+[ngMenu] {
+    margin: 0;
+    width: 15rem;
+    padding: var(--spacing-2xs);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+    background-color: var(--surface-card);
+    box-shadow: var(--shadow-soft);
+    color: var(--text-primary);
+}
+
+[ngMenu][data-visible='false'] {
+    display: none;
+}
+
+[ngMenuItem] {
+    outline: none;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-md);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    color: inherit;
+}
+
+[ngMenuItem][data-active='true'],
+[ngMenuItem]:hover {
+    background-color: var(--surface-muted);
+}
+
+[ngMenuItem]:focus-visible,
+[ngMenuTrigger]:focus-visible {
+    box-shadow: var(--focus-ring);
+}
+
+[ngMenuItem] .icon {
+    opacity: 0.8;
+    font-size: 1.25rem;
+}
+
+[ngMenuItem] .label {
+    flex: 1;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+[ngMenuItem]:not([aria-expanded='true']) .arrow {
+    opacity: 0.5;
+}
+
+[ngMenu] .separator {
+    border-top: 1px solid var(--border-color);
+    margin: var(--spacing-2xs) 0;
+    opacity: 0.3;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}

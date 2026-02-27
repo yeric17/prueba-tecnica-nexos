@@ -1,0 +1,57 @@
+<article class="order-card">
+  <div class="order-card__header">
+    <div class="order-card__header-info">
+      <h3 class="order-card__number">Pedido #{{ order().orderNumber }}</h3>
+      <span class="order-card__date">{{ order().createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+    </div>
+    <div class="order-card__status" [class]="statusConfig().class">
+      <span class="material-symbols-outlined" aria-hidden="true">{{ statusConfig().icon }}</span>
+      <span class="order-card__status-text">{{ statusConfig().label }}</span>
+    </div>
+  </div>
+
+  <div class="order-card__shipping">
+    <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+    <span>{{ order().shippingAddress }}</span>
+  </div>
+
+  <div class="order-card__items">
+    @for (item of itemsWithImages(); track item.productName) {
+      <div class="order-item">
+        <img 
+          class="order-item__image" 
+          [src]="item.imageUrl" 
+          [alt]="item.productName"
+          loading="lazy"
+        />
+        <div class="order-item__details">
+          <h4 class="order-item__name">{{ item.productName }}</h4>
+          <div class="order-item__info">
+            <span class="order-item__quantity">Cantidad: {{ item.quantity }}</span>
+            <span class="order-item__price">{{ item.unitPrice | currency:'':'symbol':'1.0-0' }}</span>
+          </div>
+        </div>
+        <div class="order-item__subtotal">
+          {{ item.subtotal | currency:'':'symbol':'1.0-0' }}
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="order-card__footer">
+    <div class="order-card__total">
+      <span class="order-card__total-label">Total:</span>
+      <span class="order-card__total-amount">{{ order().totalAmount | currency:'':'symbol':'1.0-0' }}</span>
+    </div>
+    @if (order().status === 'Pending') {
+      <button 
+        type="button" 
+        class="order-card__pay-btn"
+        (click)="handlePay()"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">payment</span>
+        <span>Pagar Pedido</span>
+      </button>
+    }
+  </div>
+</article>

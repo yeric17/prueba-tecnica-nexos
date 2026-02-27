@@ -5,10 +5,21 @@
   </div>
 
   <div class="orders-page__content">
-    <div class="orders-page__empty">
-      <span class="orders-page__empty-icon material-symbols-outlined" aria-hidden="true">receipt_long</span>
-      <p class="orders-page__empty-text">Aún no tienes pedidos realizados</p>
-      <a routerLink="/products/list" class="orders-page__empty-link">Ir a productos</a>
-    </div>
+    @if (orders.value().length === 0) {
+      <div class="orders-page__empty">
+        <span class="orders-page__empty-icon material-symbols-outlined" aria-hidden="true">receipt_long</span>
+        <p class="orders-page__empty-text">Aún no tienes pedidos realizados</p>
+        <a routerLink="/products" class="orders-page__empty-link">Ir a productos</a>
+      </div>
+    } @else {
+      <div class="orders-page__list">
+        @for (order of orders.value(); track order.id) {
+          <app-order-card 
+            [order]="order" 
+            (payOrder)="handlePayOrder($event)"
+          />
+        }
+      </div>
+    }
   </div>
 </div>

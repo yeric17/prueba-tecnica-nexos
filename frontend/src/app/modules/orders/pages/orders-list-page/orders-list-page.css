@@ -36,6 +36,12 @@
   gap: var(--spacing-xl);
 }
 
+.orders-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
 .orders-page__empty {
   display: flex;
   flex-direction: column;

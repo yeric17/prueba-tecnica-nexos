@@ -72,7 +72,6 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
 
 // Aplicar política de CORS
 app.UseCors("FrontendPolicy");

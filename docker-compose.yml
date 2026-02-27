@@ -1,4 +1,4 @@
-name: nexos-app
+name: nexos-backend
 
 services:
   gateway-webapi:

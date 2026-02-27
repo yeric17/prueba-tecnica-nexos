@@ -40,6 +40,12 @@ public sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCom
             return UserErrors.InvalidEmail;
         }
 
+        // Esto es solo para pruebas
+        if(request.UserName == "Admin")
+        {
+            _defaultRole = "Admin";
+        }
+
         var roleExists = await roleManager.RoleExistsAsync(_defaultRole);
         if (!roleExists)
         {

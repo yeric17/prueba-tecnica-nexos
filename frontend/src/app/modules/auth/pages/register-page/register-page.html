@@ -1,0 +1,56 @@
+<div class="auth-form-container">
+	<form class="auth-form" [formGroup]="form" (ngSubmit)="register()">
+		<header class="auth-form__header">
+			<picture>
+				<!-- <img class="auth-form__logo" src="/logos/ipsos-logo.png" /> -->
+			</picture>
+			<h2 class="auth-form__title">Crear cuenta</h2>
+		</header>
+		<div class="auth-form__body">
+			<div class="auth-form__row">
+				<label class="form-field" for="firstName">
+					<span class="form-field__label">Nombre</span>
+					<input id="firstName" type="text" class="form-field__input" formControlName="firstName" />
+					@if (controlInvalid('firstName')) {
+						<span class="form-field__error">Ingresa un nombre válido.</span>
+					}
+				</label>
+				<label class="form-field" for="lastName">
+					<span class="form-field__label">Apellido</span>
+					<input id="lastName" type="text" class="form-field__input" formControlName="lastName" />
+					@if (controlInvalid('lastName')) {
+						<span class="form-field__error">Ingresa un apellido válido.</span>
+					}
+				</label>
+			</div>
+			<label class="form-field" for="registerEmail">
+				<span class="form-field__label">Email</span>
+				<input id="registerEmail" type="email" class="form-field__input" formControlName="email" />
+				@if (controlInvalid('email')) {
+					<span class="form-field__error">Ingresa un email válido.</span>
+				}
+			</label>
+			<label class="form-field" for="registerPassword">
+				<span class="form-field__label">Contraseña</span>
+				<input id="registerPassword" type="password" class="form-field__input" formControlName="password" />
+				@if (controlInvalid('password')) {
+					<span class="form-field__error">La contraseña debe tener al menos 8 caracteres.</span>
+				}
+			</label>
+			<label class="form-field" for="confirmPassword">
+				<span class="form-field__label">Confirmar contraseña</span>
+				<input id="confirmPassword" type="password" class="form-field__input" formControlName="confirmPassword" />
+				@if ((controlInvalid('confirmPassword') || passwordsDoNotMatch()) && form.controls.confirmPassword.touched) {
+					<span class="form-field__error">Las contraseñas no coinciden.</span>
+				}
+			</label>
+		</div>
+		<div class="auth-form__buttons">
+			<button class="button button-primary" type="submit" [disabled]="form.invalid || isSubmitting()">Registrarme</button>
+		</div>
+		<p class="auth-form__helper">
+			<span>¿Ya tienes una cuenta?</span>
+			<a class="auth-form__link" routerLink="/auth/login">Inicia sesión</a>
+		</p>
+	</form>
+</div>

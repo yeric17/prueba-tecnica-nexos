@@ -14,7 +14,7 @@ services:
       - orders-webapi
       - payments-webapi
     ports:
-      - 6000:8080
+      - 7000:8080
   
   users-webapi:
     image: ${DOCKER_REGISTRY-}users-webapi

@@ -1,0 +1,12 @@
+.button{
+    font-size: var(--font-size-md);
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding-inline: var(--spacing-md);
+    height: 2.5rem;
+}
+.button-primary{
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+    border-radius: var(--border-radius-md);
+}

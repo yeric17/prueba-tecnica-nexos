@@ -34,7 +34,7 @@ export class LoginPage implements OnDestroy, OnInit {
       try {
        const isAuth = await this.authService.isAuthenticated()
        if(isAuth){
-        this.router.navigate(['/app'])
+        this.router.navigate(['/products/list'])
        }
       } catch (error) {
         
@@ -60,7 +60,7 @@ export class LoginPage implements OnDestroy, OnInit {
     .subscribe({
       next: (data)=>{
         this.isLoading.set(false)
-        this.router.navigate(['/app'])
+        this.router.navigate(['/products/list'])
       },
       error: (error) =>{
         this.isLoading.set(false)

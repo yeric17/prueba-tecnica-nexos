@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { RegisterFormModel } from '../../models/register.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register-page',
@@ -14,12 +15,13 @@ import { RegisterFormModel } from '../../models/register.model';
 export class RegisterPage {
 
   private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   protected readonly isSubmitting = signal(false);
 
   readonly form = this.fb.nonNullable.group({
-    firstName: ['', [Validators.required]],
-    lastName: ['', [Validators.required]],
+    userName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     confirmPassword: ['', [Validators.required]]
@@ -34,8 +36,19 @@ export class RegisterPage {
     this.isSubmitting.set(true);
     const { confirmPassword, ...payload } = this.form.getRawValue();
 
-    // TODO: Integrate with backend registration endpoint
-    console.info('Register payload', payload);
+    this.authService.register(payload)
+    .subscribe({
+      next: () => {
+        this.form.reset();
+        this.isSubmitting.set(false);
+        this.router.navigate(['/auth/login']);
+      },
+      error: (err) => {
+        console.error('Error durante el registro:', err);
+        this.isSubmitting.set(false);
+      }
+    })
+    
     this.isSubmitting.set(false);
   }
 

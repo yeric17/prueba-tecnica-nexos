@@ -3,6 +3,7 @@ import { LoginRequest, LoginResponse, UserResponse } from '../models/login.model
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { firstValueFrom, tap } from 'rxjs';
+import { RegisterRequest } from '../models/register.model';
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +27,10 @@ export class AuthService {
                 this.storeToken(response)
             })
         )
+    }
+
+    register(request:RegisterRequest){
+        return this.http.post(`${this.API_HOST}/users-service/users/register`,request)
     }
 
     storeToken(response:LoginResponse){

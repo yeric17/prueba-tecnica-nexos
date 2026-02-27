@@ -8,18 +8,11 @@
 		</header>
 		<div class="auth-form__body">
 			<div class="auth-form__row">
-				<label class="form-field" for="firstName">
-					<span class="form-field__label">Nombre</span>
-					<input id="firstName" type="text" class="form-field__input" formControlName="firstName" />
-					@if (controlInvalid('firstName')) {
-						<span class="form-field__error">Ingresa un nombre válido.</span>
-					}
-				</label>
-				<label class="form-field" for="lastName">
-					<span class="form-field__label">Apellido</span>
-					<input id="lastName" type="text" class="form-field__input" formControlName="lastName" />
-					@if (controlInvalid('lastName')) {
-						<span class="form-field__error">Ingresa un apellido válido.</span>
+				<label class="form-field" for="userName">
+					<span class="form-field__label">Nombre de Usuario</span>
+					<input id="userName" type="text" class="form-field__input" formControlName="userName" />
+					@if (controlInvalid('userName')) {
+						<span class="form-field__error">Ingresa un nombre de usuario válido.</span>
 					}
 				</label>
 			</div>

@@ -2,6 +2,7 @@ import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Product } from '../../modules/products/data/products.data';
+import { AuthService } from '../../modules/auth/services/auth.service';
 
 export interface CartItem {
   productId: string;
@@ -36,6 +37,8 @@ export interface ShippingInfo {
 })
 export class CartService {
   private readonly http = inject(HttpClient);
+  private readonly user = inject(AuthService).user;
+
   private readonly API_HOST = environment.apiHost;
   private readonly CART_STORAGE_KEY = 'shopping_cart';
 
@@ -133,8 +136,15 @@ export class CartService {
     };
   }
 
-  submitOrder(userId: string, shippingInfo: ShippingInfo) {
-    const orderRequest = this.buildOrderRequest(userId, shippingInfo);
+  submitOrder() {
+
+    const shippingInfo: ShippingInfo = {
+      address: 'Calle Falsa 123', 
+      city: 'Bogotá',
+      country: 'Colombia'
+    };
+
+    const orderRequest = this.buildOrderRequest(this.user()?.id!, shippingInfo);
     return this.http.post(`${this.API_HOST}/orders-service/orders`, orderRequest);
   }
 

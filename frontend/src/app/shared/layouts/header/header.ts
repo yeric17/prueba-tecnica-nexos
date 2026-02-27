@@ -3,10 +3,11 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { UserMenu } from '../../components/user-menu/user-menu';
 import { UserCart } from '../../components/user-cart/user-cart';
+import { Navbar } from '../../components/navbar/navbar';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, UserMenu, UserCart],
+  imports: [CommonModule, UserMenu, UserCart, Navbar],
   templateUrl: './header.html',
   styleUrl: './header.css',
   changeDetection: ChangeDetectionStrategy.OnPush

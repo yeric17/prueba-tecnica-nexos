@@ -5,8 +5,9 @@
 
 .app-header{
 	display: grid;
-	grid-template-columns: 1fr auto;
-
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	
 	gap: var(--spacing-xl);
 	padding-inline: var(--spacing-lg);
     padding-block: var(--spacing-sm);
@@ -45,6 +46,10 @@
 	margin: 0;
 	font-size: var(--font-size-lg);
 	font-weight: 600;
+}
+
+.app-header__nav {
+	justify-self: center;
 }
 
 .app-header__subtitle{
@@ -99,10 +104,26 @@
 }
 
 @media (max-width: 768px) {
+	.app-header{
+		grid-template-columns: 1fr auto auto;
+	}
 
+	.app-header__nav {
+		justify-self: end;
+		order: 2;
+	}
 
 	.app-header__actions{
-		width: 100%;
-		justify-content: space-between;
+		order: 3;
+		gap: var(--spacing-sm);
+	}
+
+	.user-chip__details {
+		display: none;
+	}
+
+	.user-chip {
+		padding: 0;
+		background-color: transparent;
 	}
 }

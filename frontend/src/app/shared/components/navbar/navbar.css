@@ -1,0 +1,137 @@
+
+
+:host {
+  display: block;
+  width: 100%;
+  font-family: var(--font-family);
+}
+
+.navbar {
+  display: flex;
+  justify-items: start;
+}
+
+.navbar__toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: var(--text-primary);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.navbar__toggle:hover {
+  background-color: var(--color-secondary-light);
+}
+
+.navbar__toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.navbar__toggle-icon {
+  font-size: 1.5rem;
+}
+
+.navbar__list {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navbar__item {
+  display: block;
+}
+
+.navbar__link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--border-radius-md);
+  transition: background-color 160ms ease, color 160ms ease;
+  white-space: nowrap;
+}
+
+.navbar__link:hover {
+  background-color: var(--surface-muted);
+  color: var(--text-primary);
+}
+
+.navbar__link:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.navbar__link--active {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-light-contrast);
+  font-weight: 600;
+}
+
+.navbar__link-icon {
+  font-size: 1.25rem;
+}
+
+.navbar__link-text {
+  font-size: var(--font-size-sm);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .navbar {
+    position: relative;
+  }
+
+  .navbar__toggle {
+    display: flex;
+  }
+
+  .navbar__list {
+    position: absolute;
+    top: calc(100% + var(--spacing-md));
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    min-width: 12rem;
+    padding: var(--spacing-xs);
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-soft);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.5rem);
+    transition: opacity 200ms ease, transform 200ms ease, visibility 200ms;
+    z-index: 1000;
+  }
+
+  .navbar__list--open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .navbar__item {
+    width: 100%;
+  }
+
+  .navbar__link {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

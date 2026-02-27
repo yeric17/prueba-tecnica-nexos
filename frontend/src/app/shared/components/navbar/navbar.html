@@ -1,0 +1,29 @@
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+  <button 
+    type="button" 
+    class="navbar__toggle"
+    (click)="toggleMenu()"
+    [attr.aria-expanded]="isMenuOpen()"
+    aria-label="Toggle navigation menu"
+  >
+    <span class="navbar__toggle-icon material-symbols-outlined" aria-hidden="true">
+      {{ isMenuOpen() ? 'close' : 'menu' }}
+    </span>
+  </button>
+
+  <ul class="navbar__list" [class.navbar__list--open]="isMenuOpen()">
+    @for (item of navItems; track item.route) {
+      <li class="navbar__item">
+        <a 
+          class="navbar__link"
+          [routerLink]="item.route"
+          routerLinkActive="navbar__link--active"
+          (click)="closeMenu()"
+        >
+          <span class="navbar__link-icon material-symbols-outlined" aria-hidden="true">{{ item.icon }}</span>
+          <span class="navbar__link-text">{{ item.label }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+</nav>

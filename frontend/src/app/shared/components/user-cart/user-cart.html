@@ -61,7 +61,7 @@
             <span class="cart-menu__total-label">Total:</span>
             <span class="cart-menu__total-amount">{{ totalAmount() | currency:'':'symbol':'1.0-0' }}</span>
           </div>
-          <button type="button" class="cart-menu__checkout-btn">
+          <button type="button" class="cart-menu__checkout-btn" (click)="createOrder()">
             <span class="material-symbols-outlined" aria-hidden="true">shopping_bag</span>
             <span>Proceder al pago</span>
           </button>

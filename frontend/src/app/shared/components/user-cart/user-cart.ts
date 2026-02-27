@@ -4,6 +4,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { CurrencyPipe } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import { CartItemComponent } from './components/cart-item/cart-item';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-cart',
@@ -41,4 +42,20 @@ export class UserCart {
       this.cartService.clearCart();
     }
   }
+
+  protected createOrder(): void {
+    this.cartService.submitOrder()
+      .subscribe({
+        next: (orderId) => {
+          alert('Pedido creado exitosamente. ID del pedido: ' + orderId);
+          this.cartService.clearCart();
+          this.cartMenu()?.close();
+        },
+        error: (err) => {
+          console.error('Error al crear el pedido:', err);
+          alert('Ocurrió un error al crear el pedido. Por favor, intenta nuevamente.');
+        }
+      });
+  }
+
 }

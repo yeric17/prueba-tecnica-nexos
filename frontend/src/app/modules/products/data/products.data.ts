@@ -33,7 +33,7 @@ export const PRODUCTS: Product[] = [
     {
         id: 'p-sourdough-bread',
         name: 'Pan sourdough artesanal',
-        imageUrl: '/images/products/sourdough-bread.jpg',
+        imageUrl: '/images/products/sourdough-bread.png',
         price: 4750
     }
 ];

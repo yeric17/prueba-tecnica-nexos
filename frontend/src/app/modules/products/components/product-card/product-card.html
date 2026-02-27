@@ -1,1 +1,30 @@
-<p>product-card works!</p>
+<article class="product-card">
+  <div class="product-card__image-container">
+    <img 
+      class="product-card__image" 
+      [src]="product().imageUrl" 
+      [alt]="product().name"
+      loading="lazy"
+    />
+  </div>
+  
+  <div class="product-card__content">
+    <h3 class="product-card__name">{{ product().name }}</h3>
+    
+    <div class="product-card__footer">
+      <span class="product-card__price" aria-label="Precio del producto">
+        {{ product().price | currency:'':'symbol':'1.0-0' }}
+      </span>
+      
+      <button 
+        type="button"
+        class="product-card__button"
+        (click)="handleAddToCart()"
+        [attr.aria-label]="'Agregar ' + product().name + ' al carrito'"
+      >
+        <span class="product-card__button-icon material-symbols-outlined" aria-hidden="true">shopping_cart</span>
+        <span class="product-card__button-text">Agregar</span>
+      </button>
+    </div>
+  </div>
+</article>

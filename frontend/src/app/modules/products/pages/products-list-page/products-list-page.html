@@ -1,1 +1,17 @@
-<p>products-list-page works!</p>
+<div class="products-page">
+  <div class="products-page__header">
+    <h1 class="products-page__title">Nuestros Productos</h1>
+    <p class="products-page__subtitle">Encuentra los mejores productos artesanales y naturales</p>
+  </div>
+
+  <div class="products-page__grid">
+    @for (product of products.value(); track product.id) {
+      <app-product-card 
+        [product]="product" 
+        (addToCart)="handleAddToCart($event)"
+      />
+    } @empty {
+      <p class="products-page__empty">No hay productos disponibles</p>
+    }
+  </div>
+</div>

@@ -28,6 +28,7 @@
     --color-secondary-contrast: #fff;
     --color-secondary-light: #8ecae6;
     --color-secondary-light-contrast: #0b1a2b;
+    --color-secondary-hover: #219ebc71;
     --color-secondary-dark: #023047;
     --color-success: #2d9d78;
     --color-error: #d64545;
@@ -59,6 +60,7 @@
     --color-secondary: #8ecae6;
     --color-secondary-contrast: #0f1b2d;
     --color-secondary-light: #a9d8f0;
+    --color-secondary-hover: #8ecae671;
     --color-secondary-light-contrast: #0f1b2d;
     --color-secondary-dark: #0b1a2b;
     --color-success: #4ade80;

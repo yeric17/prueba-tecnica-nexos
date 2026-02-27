@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--font-family);
+  background-color: var(--surface-base);
+  color: var(--text-primary);
+}
+
+.base-layout__main {
+  flex: 1;
+  width: 100%;
+}

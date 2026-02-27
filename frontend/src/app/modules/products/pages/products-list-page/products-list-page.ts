@@ -3,6 +3,7 @@ import { ProductService } from '../../services/product.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ProductCard } from '../../components/product-card/product-card';
 import { Product } from '../../data/products.data';
+import { CartService } from '../../../../shared/services/cart.service';
 
 @Component({
   selector: 'app-products-list-page',
@@ -14,6 +15,7 @@ import { Product } from '../../data/products.data';
 })
 export class ProductsListPage {
   private readonly productService = inject(ProductService);
+  private readonly cartService = inject(CartService);
 
   products = rxResource({
     stream: () => this.productService.getProducts(),
@@ -21,7 +23,6 @@ export class ProductsListPage {
   });
 
   protected handleAddToCart(product: Product): void {
-    console.log('Producto agregado al carrito:', product);
-    // Aquí se implementará la lógica para agregar al carrito
+    this.cartService.addToCart(product);
   }
 }

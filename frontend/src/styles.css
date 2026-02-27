@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
 @import './app/theme/variables.css';
 @import './app/theme/reset.css';
 @import './app/theme/typography.css';

@@ -1,0 +1,72 @@
+<button
+  ngMenuTrigger
+  #origin
+  #trigger="ngMenuTrigger"
+  [menu]="cartMenu()"
+  type="button"
+  class="cart-trigger"
+  aria-haspopup="menu"
+  [attr.aria-expanded]="trigger.expanded()"
+  aria-label="Abrir carrito de compras"
+>
+  <span class="cart-trigger__icon material-symbols-outlined" aria-hidden="true">shopping_cart</span>
+  @if (itemCount() > 0) {
+    <span class="cart-trigger__badge" aria-label="Productos en el carrito">{{ itemCount() }}</span>
+  }
+</button>
+
+<ng-template
+  [cdkConnectedOverlayOpen]="trigger.expanded()"
+  [cdkConnectedOverlay]="{origin, usePopover: 'inline'}"
+  [cdkConnectedOverlayPositions]="[
+    {originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top', offsetY: 4},
+  ]"
+  cdkAttachPopoverAsChild
+>
+  <div ngMenu class="cart-menu" #cartMenu="ngMenu">
+    <ng-template ngMenuContent>
+      <div class="cart-menu__header">
+        <h3 class="cart-menu__title">Carrito de Compras</h3>
+        @if (!isEmpty()) {
+          <button 
+            type="button" 
+            class="cart-menu__clear-btn"
+            (click)="handleClearCart()"
+            aria-label="Vaciar carrito"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
+          </button>
+        }
+      </div>
+
+      @if (isEmpty()) {
+        <div class="cart-menu__empty">
+          <span class="cart-menu__empty-icon material-symbols-outlined" aria-hidden="true">shopping_cart</span>
+          <p class="cart-menu__empty-text">Tu carrito está vacío</p>
+        </div>
+      } @else {
+        <div class="cart-menu__items">
+          @for (item of items(); track item.productId) {
+            <app-cart-item
+              [item]="item"
+              (removeItem)="handleRemoveItem($event)"
+              (increaseQuantity)="handleIncreaseQuantity($event)"
+              (decreaseQuantity)="handleDecreaseQuantity($event)"
+            />
+          }
+        </div>
+
+        <div class="cart-menu__footer">
+          <div class="cart-menu__total">
+            <span class="cart-menu__total-label">Total:</span>
+            <span class="cart-menu__total-amount">{{ totalAmount() | currency:'':'symbol':'1.0-0' }}</span>
+          </div>
+          <button type="button" class="cart-menu__checkout-btn">
+            <span class="material-symbols-outlined" aria-hidden="true">shopping_bag</span>
+            <span>Proceder al pago</span>
+          </button>
+        </div>
+      }
+    </ng-template>
+  </div>
+</ng-template>

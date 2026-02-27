@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { UserMenu } from '../../components/user-menu/user-menu';
+import { UserCart } from '../../components/user-cart/user-cart';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, UserMenu],
+  imports: [CommonModule, UserMenu, UserCart],
   templateUrl: './header.html',
   styleUrl: './header.css',
   changeDetection: ChangeDetectionStrategy.OnPush

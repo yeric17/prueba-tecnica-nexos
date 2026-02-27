@@ -3,7 +3,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { OrdersService } from '../../services/orders.service';
 import { OrderCard } from '../../components/order-card/order-card';
-import { Order } from '../../models/orders.model';
+import { Order, PayOrderRequest } from '../../models/orders.model';
 
 @Component({
   selector: 'app-orders-list-page',
@@ -20,8 +20,22 @@ export class OrdersListPage {
     defaultValue: []
   });
 
-  protected handlePayOrder(order: Order): void {
-    console.log('Procesando pago para orden:', order);
-    // Aquí se implementará la lógica para procesar el pago
+  protected payOrder(order: Order): void {
+    const payOrderRequest = this.buildPayOrderRequest(order);
+    this.ordersService.payOrder(payOrderRequest).subscribe({
+      next: () => {
+        this.orders.reload();
+      }
+    })
+  }
+
+  private buildPayOrderRequest(order: Order): PayOrderRequest {
+    return {
+      userId: order.userId,
+      orderId: order.id,
+      amount: order.totalAmount,
+      currency: 'COP', 
+      paymentMethod: 'CreditCard' 
+    } as PayOrderRequest;
   }
 }

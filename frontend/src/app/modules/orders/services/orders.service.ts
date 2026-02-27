@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { environment } from "../../../../environments/environment";
-import { Order } from "../models/orders.model";
+import { Order, PayOrderRequest } from "../models/orders.model";
 import { AuthService } from "../../auth/services/auth.service";
 
 @Injectable({
@@ -14,5 +14,9 @@ export class OrdersService {
 
     getOrders() {
         return this.http.get<Order[]>(`${this.apiHost}/orders-service/orders/user/${this.user()?.id}`);
+    }
+
+    payOrder(payOrderRequest: PayOrderRequest) {
+        return this.http.post(`${this.apiHost}/payments-service/payments`, payOrderRequest);
     }
 }

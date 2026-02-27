@@ -15,3 +15,12 @@ export interface OrderItem {
     quantity: number;
     unitPrice: number;
 }
+
+
+export interface PayOrderRequest {
+    userId: string;
+    orderId: string;
+    amount: number;
+    currency: 'COP' | 'USD' | 'EUR';
+    paymentMethod: 'CreditCard' | 'PayPal' | 'DebitCard';
+}

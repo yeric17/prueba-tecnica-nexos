@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using Application.Orders.CreateOrder;
 using Application.Orders.DeleteOrder;
+using Application.Orders.GetAllOrders;
 using Application.Orders.GetOrderById;
 using Application.Orders.GetOrdersByUserId;
 using Application.Orders.GetUserProducts;
@@ -17,6 +18,10 @@ namespace WebApi.Endpoints
         public static RouteGroupBuilder MapOrdersEndpoints(this RouteGroupBuilder builder)
         {
             var orders = builder.MapGroup("/orders");
+
+            orders.MapGet("", GetAllOrders)
+                .WithName("GetAllOrders")
+                .Produces<List<OrderDto>>(StatusCodes.Status200OK);
 
             orders.MapPost("", CreateOrder)
                 .WithName("CreateOrder")
@@ -105,6 +110,15 @@ namespace WebApi.Endpoints
             CancellationToken cancellationToken)
         {
             Result<List<OrderItemDto>> result = await handler.Handle(new GetUserProductsQuery { UserId = userId }, cancellationToken);
+
+            return result.Match(Results.Ok, CustomResults.Problem);
+        }
+
+        public static async Task<IResult> GetAllOrders(
+            IQueryHandler<GetAllOrdersQuery, List<OrderDto>> handler,
+            CancellationToken cancellationToken)
+        {
+            Result<List<OrderDto>> result = await handler.Handle(new GetAllOrdersQuery(), cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);
         }

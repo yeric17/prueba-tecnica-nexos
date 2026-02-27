@@ -1,0 +1,11 @@
+services:
+  nexos-frontend:
+    container_name: nexos-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped

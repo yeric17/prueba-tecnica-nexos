@@ -12,7 +12,7 @@ namespace WebApi.Endpoints
     {
         public static RouteGroupBuilder MapPaymentsEndpoints(this RouteGroupBuilder builder)
         {
-            var group = builder.MapGroup("payments").WithTags("Payments");
+            var group = builder.MapGroup("payments").WithTags("Payments").RequireAuthorization();
 
             group.MapPost("/", CreatePayment)
                 .WithName("CreatePayment");

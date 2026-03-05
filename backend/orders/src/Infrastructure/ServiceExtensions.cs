@@ -1,12 +1,16 @@
 ﻿
 using Application.Abstractions.Data;
+using Infrastructure.Authentication;
 using Infrastructure.Database;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Npgsql;
+using System.Text;
 
 namespace Application;
 
@@ -17,6 +21,10 @@ public static class ServiceExtensions
 
 
 
+        services.AddOptions<JwtSettings>()
+            .Bind(configuration.GetSection("Jwt"))
+            .Validate(ValidateJwtSettings);
+
         services.AddOptions<DatabaseSettings>()
             .Bind(configuration.GetSection("Database"))
             .Validate(ValidateDatabaseSettings);
@@ -24,6 +32,7 @@ public static class ServiceExtensions
 
         services
             .AddDatabase(configuration)
+            .AddAuthentication(configuration)
             .AddServices();
         return services;
     }
@@ -81,7 +90,63 @@ public static class ServiceExtensions
         return services;
     }
 
+    public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
+    {
+        JwtSettings jwtSettings = new JwtSettings
+        {
+            Secret = configuration["Jwt:Secret"]!,
+            ExpirationInMinutes = int.Parse(configuration["Jwt:ExpirationInMinutes"]!),
+            Issuer = configuration["Jwt:Issuer"]!,
+            Audience = configuration["Jwt:Audience"]!
+        };
 
+        if (ValidateJwtSettings(jwtSettings) == false)
+        {
+            throw new InvalidOperationException("JWT settings are not configured properly.");
+        }
+
+        string secret = jwtSettings.Secret;
+        string issuer = jwtSettings.Issuer;
+        string audience = jwtSettings.Audience;
+
+        services
+            .AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(o =>
+            {
+                o.RequireHttpsMetadata = false;
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = issuer,
+                    ValidAudience = audience,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+        services.AddAuthorization();
+
+        services.AddHttpContextAccessor();
+
+        return services;
+    }
+
+
+
+    private static bool ValidateJwtSettings(JwtSettings options)
+    {
+        return string.IsNullOrEmpty(options.Secret) == false
+            && options.ExpirationInMinutes > 0
+            && string.IsNullOrEmpty(options.Issuer) == false
+            && string.IsNullOrEmpty(options.Audience) == false;
+    }
 
      private static bool ValidateDatabaseSettings(DatabaseSettings options)
     {

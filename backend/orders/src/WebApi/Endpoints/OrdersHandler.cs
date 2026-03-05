@@ -17,7 +17,7 @@ namespace WebApi.Endpoints
     {
         public static RouteGroupBuilder MapOrdersEndpoints(this RouteGroupBuilder builder)
         {
-            var orders = builder.MapGroup("/orders");
+            var orders = builder.MapGroup("/orders").RequireAuthorization();
 
             orders.MapGet("", GetAllOrders)
                 .WithName("GetAllOrders")

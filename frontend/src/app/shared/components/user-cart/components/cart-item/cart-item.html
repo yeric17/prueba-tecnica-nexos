@@ -1,9 +1,10 @@
 <div class="cart-item">
   <img 
     class="cart-item__image" 
-    [src]="item().imageUrl" 
+    [src]="+item().productId | productImage" 
     [alt]="item().productName"
     loading="lazy"
+    (error)="$event.target.src='https://via.placeholder.com/80x80?text=Sin+Imagen'"
   />
   
   <div class="cart-item__details">
@@ -19,7 +20,7 @@
         (click)="handleDecrease()"
         [attr.aria-label]="'Disminuir cantidad de ' + item().productName"
       >
-        <span class="material-symbols-outlined" aria-hidden="true">remove</span>
+        <lucide-angular name="minus" [size]="14" aria-hidden="true"></lucide-angular>
       </button>
       
       <span class="cart-item__quantity" aria-label="Cantidad">{{ item().quantity }}</span>
@@ -30,7 +31,7 @@
         (click)="handleIncrease()"
         [attr.aria-label]="'Aumentar cantidad de ' + item().productName"
       >
-        <span class="material-symbols-outlined" aria-hidden="true">add</span>
+        <lucide-angular name="plus" [size]="14" aria-hidden="true"></lucide-angular>
       </button>
     </div>
 
@@ -40,7 +41,7 @@
       (click)="handleRemove()"
       [attr.aria-label]="'Eliminar ' + item().productName + ' del carrito'"
     >
-      <span class="material-symbols-outlined" aria-hidden="true">delete</span>
+      <lucide-angular name="trash-2" [size]="16" aria-hidden="true"></lucide-angular>
     </button>
   </div>
 </div>

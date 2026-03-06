@@ -5,10 +5,11 @@ import { CurrencyPipe } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import { CartItemComponent } from './components/cart-item/cart-item';
 import { Router } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-user-cart',
-  imports: [Menu, MenuContent, MenuTrigger, OverlayModule, CurrencyPipe, CartItemComponent],
+  imports: [Menu, MenuContent, MenuTrigger, OverlayModule, CurrencyPipe, CartItemComponent, LucideAngularModule],
   templateUrl: './user-cart.html',
   styleUrl: './user-cart.css',
   changeDetection: ChangeDetectionStrategy.OnPush

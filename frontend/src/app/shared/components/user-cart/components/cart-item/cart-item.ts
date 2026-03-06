@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { CartItem } from '../../../../services/cart.service';
+import { LucideAngularModule } from 'lucide-angular';
+import { ProductImagePipe } from '../../../../../modules/products/pipes/product-image.pipe';
 
 @Component({
   selector: 'app-cart-item',
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, LucideAngularModule, ProductImagePipe],
   templateUrl: './cart-item.html',
   styleUrl: './cart-item.css',
   changeDetection: ChangeDetectionStrategy.OnPush

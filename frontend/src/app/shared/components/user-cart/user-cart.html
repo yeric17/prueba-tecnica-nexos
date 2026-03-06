@@ -9,7 +9,7 @@
   [attr.aria-expanded]="trigger.expanded()"
   aria-label="Abrir carrito de compras"
 >
-  <span class="cart-trigger__icon material-symbols-outlined" aria-hidden="true">shopping_cart</span>
+  <lucide-icon name="shopping-cart" [size]="24" aria-hidden="true"></lucide-icon>
   @if (itemCount() > 0) {
     <span class="cart-trigger__badge" aria-label="Productos en el carrito">{{ itemCount() }}</span>
   }
@@ -34,14 +34,14 @@
             (click)="handleClearCart()"
             aria-label="Vaciar carrito"
           >
-            <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
+            <lucide-angular name="eraser" [size]="18" aria-hidden="true"></lucide-angular>
           </button>
         }
       </div>
 
       @if (isEmpty()) {
         <div class="cart-menu__empty">
-          <span class="cart-menu__empty-icon material-symbols-outlined" aria-hidden="true">shopping_cart</span>
+          <lucide-angular name="shopping-cart" [size]="40" class="cart-menu__empty-icon" aria-hidden="true"></lucide-angular>
           <p class="cart-menu__empty-text">Tu carrito está vacío</p>
         </div>
       } @else {
@@ -62,8 +62,8 @@
             <span class="cart-menu__total-amount">{{ totalAmount() | currency:'':'symbol':'1.0-0' }}</span>
           </div>
           <button type="button" class="cart-menu__checkout-btn" (click)="createOrder()">
-            <span class="material-symbols-outlined" aria-hidden="true">shopping_bag</span>
-            <span>Proceder al pago</span>
+            <lucide-angular name="shopping-bag" [size]="18" aria-hidden="true"></lucide-angular>
+            <span>Agregar Pedido</span>
           </button>
         </div>
       }

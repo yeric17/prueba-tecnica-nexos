@@ -12,7 +12,7 @@
   </button>
 
   <ul class="navbar__list" [class.navbar__list--open]="isMenuOpen()">
-    @for (item of navItems; track item.route) {
+    @for (item of navItems(); track item.route) {
       <li class="navbar__item">
         <a 
           class="navbar__link"

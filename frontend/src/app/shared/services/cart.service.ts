@@ -65,7 +65,7 @@ export class CartService {
 
   addToCart(product: Product, quantity: number = 1): void {
     const currentItems = this._items();
-    const existingItemIndex = currentItems.findIndex(item => item.productId === product.id);
+    const existingItemIndex = currentItems.findIndex(item => parseInt(item.productId) === product.id);
 
     if (existingItemIndex !== -1) {
       // Item exists, update quantity
@@ -78,11 +78,11 @@ export class CartService {
     } else {
       // Add new item
       const newItem: CartItem = {
-        productId: product.id,
+        productId: product.id.toString(),
         productName: product.name,
         unitPrice: product.price,
         quantity: quantity,
-        imageUrl: product.imageUrl
+        imageUrl: product.imageUrl ?? ''
       };
       this._items.set([...currentItems, newItem]);
     }

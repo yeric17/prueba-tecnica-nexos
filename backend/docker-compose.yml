@@ -39,6 +39,8 @@ services:
     depends_on:
       postgres-orders:
         condition: service_healthy
+    volumes:
+      - orders-files:/app/Files
     # Sin exposición de puertos - solo accesible internamente via gateway
   payments-webapi:
     image: ${DOCKER_REGISTRY-}payments-webapi
@@ -97,3 +99,6 @@ services:
       - ./gateway/.containers/payments/db:/var/lib/postgresql/data        
     ports:
       - 5434:5432
+
+volumes:
+  orders-files:

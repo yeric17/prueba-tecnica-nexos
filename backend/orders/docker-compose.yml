@@ -10,6 +10,8 @@ services:
         condition: service_healthy
     ports:
       - 5000:8080
+    volumes:
+      - orders-files:/app/Files
   postgres-orders:
     image: postgres:17
     container_name: postgres-orders
@@ -25,3 +27,6 @@ services:
       - ./.containers/db:/var/lib/postgresql/data
     ports:
       - 5432:5432
+
+volumes:
+  orders-files:

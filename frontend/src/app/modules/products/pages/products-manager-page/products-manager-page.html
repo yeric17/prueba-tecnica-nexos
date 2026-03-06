@@ -1,0 +1,239 @@
+<div class="manager-container">
+  <div class="header">
+    <h1>Administración de Productos</h1>
+    <div class="header-actions">
+      <button class="btn btn-secondary" (click)="goToProducts()">
+        Ver Catálogo
+      </button>
+      <button class="btn btn-primary" (click)="openCreateForm()">
+        + Nuevo Producto
+      </button>
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading">
+      <p>Cargando...</p>
+    </div>
+  }
+
+  <!-- Product Form Modal -->
+  @if (showForm()) {
+    <div class="modal-overlay" (click)="cancelForm()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>{{ editingProduct() ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+          <button class="close-btn" (click)="cancelForm()">&times;</button>
+        </div>
+        
+        <form [formGroup]="productForm" (ngSubmit)="saveProduct()" class="product-form">
+          <div class="form-group">
+            <label for="name">Nombre *</label>
+            <input 
+              id="name" 
+              type="text" 
+              formControlName="name"
+              placeholder="Nombre del producto"
+              class="form-control"
+            />
+            @if (productForm.get('name')?.invalid && productForm.get('name')?.touched) {
+              <span class="error">El nombre es requerido (mínimo 3 caracteres)</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="description">Descripción</label>
+            <textarea 
+              id="description" 
+              formControlName="description"
+              placeholder="Descripción del producto"
+              class="form-control"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="price">Precio *</label>
+              <input 
+                id="price" 
+                type="number" 
+                formControlName="price"
+                placeholder="0"
+                class="form-control"
+              />
+              @if (productForm.get('price')?.invalid && productForm.get('price')?.touched) {
+                <span class="error">El precio debe ser mayor o igual a 0</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="stockQuantity">Stock *</label>
+              <input 
+                id="stockQuantity" 
+                type="number" 
+                formControlName="stockQuantity"
+                placeholder="0"
+                class="form-control"
+              />
+              @if (productForm.get('stockQuantity')?.invalid && productForm.get('stockQuantity')?.touched) {
+                <span class="error">El stock debe ser mayor o igual a 0</span>
+              }
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="category">Categoría</label>
+            <input 
+              id="category" 
+              type="text" 
+              formControlName="category"
+              placeholder="Ej: Alimentos, Bebidas, etc."
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="imageUrl">URL de Imagen (opcional)</label>
+            <input 
+              id="imageUrl" 
+              type="text" 
+              formControlName="imageUrl"
+              placeholder="https://..."
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group checkbox-group">
+            <label>
+              <input 
+                type="checkbox" 
+                formControlName="isActive"
+              />
+              Producto activo
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" (click)="cancelForm()">
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid || isLoading()">
+              {{ editingProduct() ? 'Actualizar' : 'Crear' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- Image Manager Modal -->
+  @if (selectedProductForImages()) {
+    <div class="modal-overlay" (click)="closeImageManager()">
+      <div class="modal-content image-modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Imágenes de {{ selectedProductForImages()!.name }}</h2>
+          <button class="close-btn" (click)="closeImageManager()">&times;</button>
+        </div>
+        
+        <div class="image-upload-section">
+          <label for="file-upload" class="upload-label">
+            📁 Seleccionar imagen
+          </label>
+          <input 
+            id="file-upload" 
+            type="file" 
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            style="display: none"
+          />
+          <p class="upload-hint">JPG, PNG, GIF, WEBP (máx. 5MB)</p>
+        </div>
+
+        <div class="images-grid">
+          @for (image of productImages(); track image.id) {
+            <div class="image-card">
+              <img [src]="getImageUrl(image.filePath)" [alt]="image.fileName" />
+              <div class="image-info">
+                <p class="image-name">{{ image.fileName }}</p>
+                @if (image.isPrimary) {
+                  <span class="badge-primary">Principal</span>
+                }
+              </div>
+              <button class="delete-image-btn" (click)="deleteImage(image.id)">
+                🗑️
+              </button>
+            </div>
+          }
+          @empty {
+            <p class="no-images">No hay imágenes cargadas</p>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Products Table -->
+  <div class="products-table">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of products(); track product.id) {
+          <tr [class.inactive]="!product.isActive">
+            <td>{{ product.id }}</td>
+            <td>
+              <div class="product-name-cell">
+                <img 
+                  [src]="getProductImageUrl(product.id)" 
+                  [alt]="product.name" 
+                  class="product-thumb"
+                  (error)="$event.target.src='https://via.placeholder.com/50x50?text=?'"
+                />
+                <span>{{ product.name }}</span>
+              </div>
+            </td>
+            <td>{{ product.category || '-' }}</td>
+            <td>$ {{ product.price.toLocaleString('es-CO') }}</td>
+            <td>{{ product.stockQuantity }}</td>
+            <td>
+              <span class="status-badge" [class.active]="product.isActive" [class.inactive]="!product.isActive">
+                {{ product.isActive ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td>
+              <div class="actions">
+                <button class="btn-icon" (click)="openEditForm(product)" title="Editar">
+                  ✏️
+                </button>
+                <button class="btn-icon" (click)="openImageManager(product)" title="Imágenes">
+                  🖼️
+                </button>
+                <button class="btn-icon" (click)="toggleProductStatus(product)" title="Cambiar estado">
+                  {{ product.isActive ? '🔒' : '🔓' }}
+                </button>
+                <button class="btn-icon danger" (click)="deleteProduct(product)" title="Eliminar">
+                  🗑️
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td colspan="7" class="no-data">No hay productos registrados</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

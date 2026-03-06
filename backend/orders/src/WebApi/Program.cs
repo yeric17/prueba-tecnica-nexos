@@ -36,5 +36,7 @@ var apiGroup = app.MapGroup("/api");
 
 apiGroup.MapHealthChecks();
 apiGroup.MapOrdersEndpoints();
+apiGroup.MapProductsEndpoints();
+apiGroup.MapFilesEndpoints();
 
 await app.RunAsync();

@@ -1,8 +1,10 @@
 ﻿
 using Application.Abstractions.Authentication;
 using Application.Abstractions.Data;
+using Application.Abstractions.Storage;
 using Infrastructure.Authentication;
 using Infrastructure.Database;
+using Infrastructure.Storage;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -41,6 +43,7 @@ public static class ServiceExtensions
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<IUserContext, UserContext>();
+        services.AddScoped<IFileStorageService, LocalFileStorageService>();
         return services;
     }
 

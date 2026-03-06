@@ -1,0 +1,27 @@
+@if (state()) {
+  <div
+    class="confirm-overlay"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="'confirm-title'"
+    (click)="cancel()"
+  >
+    <div class="confirm-dialog" (click)="$event.stopPropagation()">
+      <div class="confirm-dialog__icon-wrapper">
+        <lucide-angular name="alert-triangle" [size]="28" aria-hidden="true"></lucide-angular>
+      </div>
+
+      <h2 class="confirm-dialog__title" id="confirm-title">{{ state()!.config.title }}</h2>
+      <p class="confirm-dialog__message">{{ state()!.config.message }}</p>
+
+      <div class="confirm-dialog__actions">
+        <button type="button" class="confirm-dialog__cancel-btn" (click)="cancel()">
+          {{ state()!.config.cancelLabel }}
+        </button>
+        <button type="button" class="confirm-dialog__confirm-btn" (click)="confirm()">
+          {{ state()!.config.confirmLabel }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

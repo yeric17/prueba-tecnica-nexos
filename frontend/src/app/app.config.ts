@@ -5,9 +5,12 @@ import { routes } from './app.routes';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { apiConnectionInterceptor } from './core/interceptors/api-connection-interceptor';
 import {
+  AlertTriangle,
   ArrowLeft,
+  CheckCircle,
   Eraser,
   Image,
+  Info,
   Lock,
   LockOpen,
   LogOut,
@@ -22,6 +25,7 @@ import {
   Trash2,
   Upload,
   X,
+  XCircle,
 } from 'lucide-angular';
 
 export const appConfig: ApplicationConfig = {
@@ -31,9 +35,12 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(),withInterceptors([apiConnectionInterceptor])),
     importProvidersFrom(
       LucideAngularModule.pick({
+        AlertTriangle,
         ArrowLeft,
+        CheckCircle,
         Eraser,
         Image,
+        Info,
         Lock,
         LockOpen,
         LogOut,
@@ -47,6 +54,7 @@ export const appConfig: ApplicationConfig = {
         Trash2,
         Upload,
         X,
+        XCircle,
       })
     )
   ]

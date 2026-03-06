@@ -6,6 +6,8 @@ import { ProductService } from '../../services/product.service';
 import { Product } from '../../data/products.data';
 import { LucideAngularModule } from 'lucide-angular';
 import { Button } from '../../../../shared/components/buttons/button/button';
+import { ConfirmDialogService } from '../../../../shared/components/confirm-dialog/confirm-dialog.service';
+import { ToastService } from '../../../../shared/components/toast/toast.service';
 
 @Component({
   selector: 'app-products-manager-page',
@@ -20,6 +22,8 @@ export class ProductsManagerPage implements OnInit {
   private productService = inject(ProductService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private confirmDialog = inject(ConfirmDialogService);
+  private toast = inject(ToastService);
 
   products = signal<Product[]>([]);
   isLoading = signal(false);
@@ -118,7 +122,7 @@ export class ProductsManagerPage implements OnInit {
         error: (error) => {
           console.error('Error updating product:', error);
           this.isLoading.set(false);
-          alert('Error al actualizar el producto');
+          this.toast.error('Error al actualizar el producto');
         }
       });
     } else {
@@ -132,16 +136,18 @@ export class ProductsManagerPage implements OnInit {
         error: (error) => {
           console.error('Error creating product:', error);
           this.isLoading.set(false);
-          alert('Error al crear el producto');
+          this.toast.error('Error al crear el producto');
         }
       });
     }
   }
 
-  deleteProduct(product: Product): void {
-    if (!confirm(`¿Estás seguro de eliminar el producto "${product.name}"?`)) {
-      return;
-    }
+  async deleteProduct(product: Product): Promise<void> {
+    const confirmed = await this.confirmDialog.confirm(
+      `¿Estás seguro de eliminar el producto "${product.name}"?`,
+      'Eliminar producto'
+    );
+    if (!confirmed) return;
 
     this.isLoading.set(true);
     this.productService.deleteProduct(product.id).subscribe({
@@ -152,7 +158,7 @@ export class ProductsManagerPage implements OnInit {
       error: (error) => {
         console.error('Error deleting product:', error);
         this.isLoading.set(false);
-        alert('Error al eliminar el producto');
+        this.toast.error('Error al eliminar el producto');
       }
     });
   }
@@ -175,7 +181,7 @@ export class ProductsManagerPage implements OnInit {
       },
       error: (error) => {
         console.error('Error toggling product status:', error);
-        alert('Error al cambiar el estado del producto');
+        this.toast.error('Error al cambiar el estado del producto');
       }
     });
   }
@@ -223,15 +229,17 @@ export class ProductsManagerPage implements OnInit {
       },
       error: (error) => {
         console.error('Error uploading image:', error);
-        alert('Error al subir la imagen');
+        this.toast.error('Error al subir la imagen');
       }
     });
   }
 
-  deleteImage(imageId: string): void {
-    if (!confirm('¿Estás seguro de eliminar esta imagen?')) {
-      return;
-    }
+  async deleteImage(imageId: string): Promise<void> {
+    const confirmed = await this.confirmDialog.confirm(
+      '¿Estás seguro de eliminar esta imagen?',
+      'Eliminar imagen'
+    );
+    if (!confirmed) return;
 
     this.productService.deleteProductImage(imageId).subscribe({
       next: () => {
@@ -242,7 +250,7 @@ export class ProductsManagerPage implements OnInit {
       },
       error: (error) => {
         console.error('Error deleting image:', error);
-        alert('Error al eliminar la imagen');
+        this.toast.error('Error al eliminar la imagen');
       }
     });
   }

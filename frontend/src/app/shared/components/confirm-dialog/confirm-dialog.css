@@ -1,0 +1,97 @@
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: var(--spacing-md);
+  backdrop-filter: blur(2px);
+  animation: overlay-in 0.15s ease;
+}
+
+.confirm-dialog {
+  background: var(--surface-card);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-xl);
+  max-width: 420px;
+  width: 100%;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  text-align: center;
+  animation: dialog-in 0.2s ease;
+}
+
+.confirm-dialog__icon-wrapper {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: rgba(251, 133, 0, 0.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+}
+
+.confirm-dialog__title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.confirm-dialog__message {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.confirm-dialog__actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  width: 100%;
+  margin-top: var(--spacing-sm);
+}
+
+.confirm-dialog__cancel-btn,
+.confirm-dialog__confirm-btn {
+  flex: 1;
+  height: var(--input-height);
+  border-radius: var(--border-radius-sm);
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+
+.confirm-dialog__cancel-btn {
+  background: var(--surface-muted);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.confirm-dialog__confirm-btn {
+  background: var(--color-error);
+  color: #fff;
+}
+
+.confirm-dialog__cancel-btn:hover,
+.confirm-dialog__confirm-btn:hover {
+  opacity: 0.8;
+}
+
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dialog-in {
+  from { transform: scale(0.93); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

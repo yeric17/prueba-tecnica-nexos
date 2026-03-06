@@ -1,0 +1,21 @@
+<div class="toast-container" aria-live="polite" aria-atomic="false">
+  @for (toast of toasts(); track trackToast($index, toast)) {
+    <div class="toast toast--{{ toast.type }}" role="status">
+      <lucide-angular
+        [name]="iconFor(toast.type)"
+        [size]="18"
+        class="toast__icon"
+        aria-hidden="true"
+      ></lucide-angular>
+      <span class="toast__message">{{ toast.message }}</span>
+      <button
+        type="button"
+        class="toast__dismiss"
+        (click)="service.dismiss(toast.id)"
+        aria-label="Cerrar notificación"
+      >
+        <lucide-angular name="x" [size]="14" aria-hidden="true"></lucide-angular>
+      </button>
+    </div>
+  }
+</div>

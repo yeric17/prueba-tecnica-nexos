@@ -143,7 +143,7 @@ export class CartService {
     };
 
     const orderRequest = this.buildOrderRequest(shippingInfo);
-    return this.http.post(`${this.API_HOST}/orders-service/orders`, orderRequest);
+    return this.http.post<{id:string}>(`${this.API_HOST}/orders-service/orders`, orderRequest);
   }
 
   private saveCartToStorage(): void {

@@ -6,6 +6,8 @@ import { CartService } from '../../services/cart.service';
 import { CartItemComponent } from './components/cart-item/cart-item';
 import { Router } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
+import { ConfirmDialogService } from '../confirm-dialog/confirm-dialog.service';
+import { ToastService } from '../toast/toast.service';
 
 @Component({
   selector: 'app-user-cart',
@@ -16,6 +18,8 @@ import { LucideAngularModule } from 'lucide-angular';
 })
 export class UserCart {
   private readonly cartService = inject(CartService);
+  private readonly confirmDialog = inject(ConfirmDialogService);
+  private readonly toast = inject(ToastService);
 
   protected readonly items = this.cartService.items;
   protected readonly itemCount = this.cartService.itemCount;
@@ -38,23 +42,26 @@ export class UserCart {
     this.cartService.updateQuantity(productId, currentQuantity - 1);
   }
 
-  protected handleClearCart(): void {
-    if (confirm('¿Estás seguro de que deseas vaciar el carrito?')) {
-      this.cartService.clearCart();
-    }
+  protected async handleClearCart(): Promise<void> {
+    const confirmed = await this.confirmDialog.confirm(
+      '¿Estás seguro de que deseas vaciar el carrito?',
+      'Vaciar carrito'
+    );
+    if (!confirmed) return;
+    this.cartService.clearCart();
   }
 
   protected createOrder(): void {
     this.cartService.submitOrder()
       .subscribe({
-        next: (orderId) => {
-          alert('Pedido creado exitosamente. ID del pedido: ' + orderId);
+        next: (order: { id: string }) => {
+          this.toast.success('Pedido creado exitosamente. ID del pedido: ' + order.id);
           this.cartService.clearCart();
           this.cartMenu()?.close();
         },
         error: (err) => {
           console.error('Error al crear el pedido:', err);
-          alert('Ocurrió un error al crear el pedido. Por favor, intenta nuevamente.');
+          this.toast.error('Ocurrió un error al crear el pedido. Por favor, intenta nuevamente.');
         }
       });
   }

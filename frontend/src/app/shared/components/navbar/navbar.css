@@ -64,7 +64,24 @@
   border-radius: var(--border-radius-md);
   transition: background-color 160ms ease, color 160ms ease;
   white-space: nowrap;
+  position: relative;
 }
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 2px;
+  background-color: transparent;
+  border-radius: var(--border-radius-sm);
+  transition: width 200ms ease;
+}
+
+
 
 .navbar__link:hover {
   background-color: var(--surface-muted);
@@ -76,10 +93,8 @@
   box-shadow: var(--focus-ring);
 }
 
-.navbar__link--active {
-  background-color: var(--color-primary-light);
-  color: var(--color-primary-light-contrast);
-  font-weight: 600;
+.navbar__link--active:after {
+  background-color: var(--color-primary);
 }
 
 .navbar__link-icon {

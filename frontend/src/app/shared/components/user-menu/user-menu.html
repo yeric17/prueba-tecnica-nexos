@@ -15,6 +15,7 @@
   [cdkConnectedOverlayOpen]="trigger.expanded()"
   [cdkConnectedOverlay]="{origin, usePopover: 'inline'}"
   [cdkConnectedOverlayPositions]="[
+    {originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top', offsetY: 4},
     {originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4},
   ]"
   cdkAttachPopoverAsChild

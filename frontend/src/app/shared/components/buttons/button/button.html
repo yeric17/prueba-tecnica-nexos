@@ -4,8 +4,13 @@
     [class.full-width]="fullWidth()" 
     (click)="clickHandler($event)"
     [disabled]="isLoading() || disabled()">
+
+    @if(icon()){
+        <lucide-angular [name]="icon()!" [size]="18" class="button__icon" aria-hidden="true"></lucide-angular>
+    }
     <ng-content></ng-content>
     @if(isLoading()){
         <span class="button__loader"></span>
     }
+    
 </button>

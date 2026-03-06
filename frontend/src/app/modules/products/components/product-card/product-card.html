@@ -23,7 +23,7 @@
         (click)="handleAddToCart()"
         [attr.aria-label]="'Agregar ' + product().name + ' al carrito'"
       >
-        <span class="product-card__button-icon material-symbols-outlined" aria-hidden="true">shopping_cart</span>
+        <lucide-angular name="shopping-cart" class="product-card__button-icon" [size]="18" aria-hidden="true"></lucide-angular>
         <span class="product-card__button-text">Agregar</span>
       </button>
     </div>

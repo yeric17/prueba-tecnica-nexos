@@ -2,12 +2,9 @@
   <div class="header">
     <h1>Administración de Productos</h1>
     <div class="header-actions">
-      <button class="btn btn-secondary" (click)="goToProducts()">
-        Ver Catálogo
-      </button>
-      <button class="btn btn-primary" (click)="openCreateForm()">
-        + Nuevo Producto
-      </button>
+      <app-button icon="plus" (click)="openCreateForm()">
+        Nuevo Producto
+      </app-button>
     </div>
   </div>
 
@@ -23,7 +20,7 @@
       <div class="modal-content" (click)="$event.stopPropagation()">
         <div class="modal-header">
           <h2>{{ editingProduct() ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
-          <button class="close-btn" (click)="cancelForm()">&times;</button>
+          <button class="close-btn" (click)="cancelForm()"><lucide-angular name="x" [size]="20"></lucide-angular></button>
         </div>
         
         <form [formGroup]="productForm" (ngSubmit)="saveProduct()" class="product-form">
@@ -93,17 +90,6 @@
             />
           </div>
 
-          <div class="form-group">
-            <label for="imageUrl">URL de Imagen (opcional)</label>
-            <input 
-              id="imageUrl" 
-              type="text" 
-              formControlName="imageUrl"
-              placeholder="https://..."
-              class="form-control"
-            />
-          </div>
-
           <div class="form-group checkbox-group">
             <label>
               <input 
@@ -115,12 +101,12 @@
           </div>
 
           <div class="form-actions">
-            <button type="button" class="btn btn-secondary" (click)="cancelForm()">
+            <app-button variant="secondary-outline" (click)="cancelForm()">
               Cancelar
-            </button>
-            <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid || isLoading()">
+            </app-button>
+            <app-button type="submit" [disabled]="productForm.invalid || isLoading()">
               {{ editingProduct() ? 'Actualizar' : 'Crear' }}
-            </button>
+            </app-button>
           </div>
         </form>
       </div>
@@ -133,12 +119,13 @@
       <div class="modal-content image-modal" (click)="$event.stopPropagation()">
         <div class="modal-header">
           <h2>Imágenes de {{ selectedProductForImages()!.name }}</h2>
-          <button class="close-btn" (click)="closeImageManager()">&times;</button>
+          <button class="close-btn" (click)="closeImageManager()"><lucide-angular name="x" [size]="20"></lucide-angular></button>
         </div>
         
         <div class="image-upload-section">
           <label for="file-upload" class="upload-label">
-            📁 Seleccionar imagen
+            <lucide-angular name="upload" [size]="16"></lucide-angular>
+            Seleccionar imagen
           </label>
           <input 
             id="file-upload" 
@@ -161,7 +148,7 @@
                 }
               </div>
               <button class="delete-image-btn" (click)="deleteImage(image.id)">
-                🗑️
+                <lucide-angular name="trash-2" [size]="16"></lucide-angular>
               </button>
             </div>
           }
@@ -213,16 +200,20 @@
             <td>
               <div class="actions">
                 <button class="btn-icon" (click)="openEditForm(product)" title="Editar">
-                  ✏️
+                  <lucide-angular name="pencil" [size]="16"></lucide-angular>
                 </button>
                 <button class="btn-icon" (click)="openImageManager(product)" title="Imágenes">
-                  🖼️
+                  <lucide-angular name="image" [size]="16"></lucide-angular>
                 </button>
-                <button class="btn-icon" (click)="toggleProductStatus(product)" title="Cambiar estado">
-                  {{ product.isActive ? '🔒' : '🔓' }}
-                </button>
+                <!-- <button class="btn-icon" (click)="toggleProductStatus(product)" title="Cambiar estado">
+                  @if (product.isActive) {
+                    <lucide-angular name="lock" [size]="16"></lucide-angular>
+                  } @else {
+                    <lucide-angular name="lock-open" [size]="16"></lucide-angular>
+                  }
+                </button> -->
                 <button class="btn-icon danger" (click)="deleteProduct(product)" title="Eliminar">
-                  🗑️
+                  <lucide-angular name="trash-2" [size]="16"></lucide-angular>
                 </button>
               </div>
             </td>

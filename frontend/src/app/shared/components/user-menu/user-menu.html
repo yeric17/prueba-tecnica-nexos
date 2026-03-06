@@ -23,14 +23,12 @@
   <div ngMenu class="menu" #formatMenu="ngMenu">
     <ng-template ngMenuContent>
       <div ngMenuItem value="theme-toggle" (click)="toggleTheme()">
-        <span class="icon material-symbols-outlined" translate="no" aria-hidden="true">
-          {{ theme() === 'dark' ? 'light_mode' : 'dark_mode' }}
-        </span>
+        <lucide-angular [name]="theme() === 'dark' ? 'sun' : 'moon'" [size]="18" class="icon" aria-hidden="true"></lucide-angular>
         <span class="label">Tema {{ theme() === 'dark' ? 'claro' : 'oscuro' }}</span>
       </div>
       <div class="separator" role="presentation"></div>
       <div ngMenuItem value="logout" (click)="logout()">
-        <span class="icon material-symbols-outlined" translate="no" aria-hidden="true">logout</span>
+        <lucide-angular name="log-out" [size]="18" class="icon" aria-hidden="true"></lucide-angular>
         <span class="label">Cerrar sesión</span>
       </div>
     </ng-template>

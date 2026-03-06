@@ -4,11 +4,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../data/products.data';
+import { LucideAngularModule } from 'lucide-angular';
+import { Button } from '../../../../shared/components/buttons/button/button';
 
 @Component({
   selector: 'app-products-manager-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, LucideAngularModule, Button],
   templateUrl: './products-manager-page.html',
   styleUrl: './products-manager-page.css',
   providers: [ProductService]

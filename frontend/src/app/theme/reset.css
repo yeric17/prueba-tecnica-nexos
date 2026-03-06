@@ -10,3 +10,9 @@ body{
 input,textarea,select{
     color: #000;
 }
+
+lucide-angular {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

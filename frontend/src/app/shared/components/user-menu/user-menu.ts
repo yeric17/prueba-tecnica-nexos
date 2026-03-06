@@ -3,10 +3,11 @@ import { Menu, MenuContent, MenuItem, MenuTrigger } from '@angular/aria/menu';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { ThemeService } from '../../services/theme.service';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-user-menu',
-  imports: [Menu, MenuContent, MenuItem, MenuTrigger, OverlayModule],
+  imports: [Menu, MenuContent, MenuItem, MenuTrigger, OverlayModule, LucideAngularModule],
   templateUrl: './user-menu.html',
   styleUrl: './user-menu.css',
   changeDetection: ChangeDetectionStrategy.OnPush

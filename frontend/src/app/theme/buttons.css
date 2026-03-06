@@ -22,3 +22,24 @@
 .button-secondary:hover{
     background-color: var(--color-secondary-hover);
 }
+
+.button-secondary-outline {
+    background-color: transparent;
+    color: var(--color-secondary);
+    border: 1px solid var(--color-secondary);
+    border-radius: var(--border-radius-md);
+}
+.button-secondary-outline:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-secondary-contrast);
+}
+.button-primary-outline {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--border-radius-md);
+}
+.button-primary-outline:hover {
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+}

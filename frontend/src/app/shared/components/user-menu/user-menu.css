@@ -74,7 +74,9 @@
 
 [ngMenuItem] .icon {
     opacity: 0.8;
-    font-size: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
 }
 
 [ngMenuItem] .label {

@@ -4,6 +4,7 @@ import { AuthService } from '../../../modules/auth/services/auth.service';
 import { UserMenu } from '../../components/user-menu/user-menu';
 import { UserCart } from '../../components/user-cart/user-cart';
 import { Navbar } from '../../components/navbar/navbar';
+import { ThemeService } from '../../../shared/services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -14,8 +15,17 @@ import { Navbar } from '../../components/navbar/navbar';
 })
 export class Header {
   private readonly authService = inject(AuthService);
+  private readonly themeService = inject(ThemeService);
 
   protected readonly user = this.authService.user;
+
+  protected readonly logoColor1 = computed(() => {
+    return this.themeService.theme() === 'dark' ? '#FFFFFF' : '#FF4D00';
+  });
+
+  protected readonly logoColor2 = computed(() => {
+    return this.themeService.theme() === 'dark' ? '#CCCCCC' : '#391300';
+  });
 
   protected readonly displayName = computed(() => {
     const user = this.user();

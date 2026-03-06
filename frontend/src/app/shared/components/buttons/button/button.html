@@ -1,0 +1,11 @@
+<button 
+    type="{{type()}}"
+    class="button button-{{variant()}}" 
+    [class.full-width]="fullWidth()" 
+    (click)="clickHandler($event)"
+    [disabled]="isLoading() || disabled()">
+    <ng-content></ng-content>
+    @if(isLoading()){
+        <span class="button__loader"></span>
+    }
+</button>

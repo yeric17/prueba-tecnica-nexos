@@ -18,7 +18,6 @@ export interface OrderItem {
 
 
 export interface PayOrderRequest {
-    userId: string;
     orderId: string;
     amount: number;
     currency: 'COP' | 'USD' | 'EUR';

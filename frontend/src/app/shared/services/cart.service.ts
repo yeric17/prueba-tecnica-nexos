@@ -13,7 +13,6 @@ export interface CartItem {
 }
 
 export interface OrderRequest {
-  userId: string;
   shippingAddress: string;
   shippingCity: string;
   shippingCountry: string;
@@ -122,9 +121,8 @@ export class CartService {
     return item?.quantity ?? 0;
   }
 
-  buildOrderRequest(userId: string, shippingInfo: ShippingInfo): OrderRequest {
+  buildOrderRequest(shippingInfo: ShippingInfo): OrderRequest {
     return {
-      userId: userId,
       shippingAddress: shippingInfo.address,
       shippingCity: shippingInfo.city,
       shippingCountry: shippingInfo.country,
@@ -144,7 +142,7 @@ export class CartService {
       country: 'Colombia'
     };
 
-    const orderRequest = this.buildOrderRequest(this.user()?.id!, shippingInfo);
+    const orderRequest = this.buildOrderRequest(shippingInfo);
     return this.http.post(`${this.API_HOST}/orders-service/orders`, orderRequest);
   }
 

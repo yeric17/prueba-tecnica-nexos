@@ -1,4 +1,5 @@
-﻿using Application.Abstractions.Messaging;
+﻿using Application.Abstractions.Authentication;
+using Application.Abstractions.Messaging;
 using Application.Payments.CreatePayment;
 using Application.Payments.GetPaymentsByUser;
 using Domain.Payments.DTOs;
@@ -17,7 +18,7 @@ namespace WebApi.Endpoints
             group.MapPost("/", CreatePayment)
                 .WithName("CreatePayment");
 
-            group.MapGet("/user/{userId:guid}", GetPaymentsByUser)
+            group.MapGet("/user/me", GetPaymentsByUser)
                 .WithName("GetPaymentsByUser");
 
             return builder;
@@ -25,10 +26,12 @@ namespace WebApi.Endpoints
 
         public static async Task<IResult> CreatePayment(
             ICommandHandler<CreatePaymentCommand> handler,
+            IUserContext userContext,
             CreatePaymentCommand command,
             CancellationToken cancellationToken
         )
         {
+            command.UserId = userContext.UserId;
             Result result = await handler.Handle(command, cancellationToken);
 
             return result.Match(Results.NoContent, CustomResults.Problem);
@@ -36,11 +39,11 @@ namespace WebApi.Endpoints
 
         public static async Task<IResult> GetPaymentsByUser(
             IQueryHandler<GetPaymentsByUserQuery, IReadOnlyList<PaymentDto>> handler,
-            Guid userId,
+            IUserContext userContext,
             CancellationToken cancellationToken
         )
         {
-            var query = new GetPaymentsByUserQuery(userId);
+            var query = new GetPaymentsByUserQuery(userContext.UserId);
             Result<IReadOnlyList<PaymentDto>> result = await handler.Handle(query, cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);

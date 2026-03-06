@@ -4,9 +4,21 @@
     border: 1px solid transparent;
     padding-inline: var(--spacing-md);
     height: 2.5rem;
+    cursor: pointer;
 }
 .button-primary{
     background-color: var(--color-primary);
     color: var(--color-primary-contrast);
     border-radius: var(--border-radius-md);
+}
+.button-primary:hover{
+    background-color: var(--color-primary-hover);
+}
+.button-secondary{
+    background-color: var(--color-secondary);
+    color: var(--color-secondary-contrast);
+    border-radius: var(--border-radius-md);
+}
+.button-secondary:hover{
+    background-color: var(--color-secondary-hover);
 }

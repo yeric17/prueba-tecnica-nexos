@@ -25,11 +25,14 @@
     --color-primary-light: #fcd268;
     --color-primary-contrast: #fff;
     --color-primary-accent: #ffb703;
+
+    --color-primary-hover: hsl(36, 100%, 50%);
+
     --color-secondary: #219ebc;
     --color-secondary-contrast: #fff;
     --color-secondary-light: #8ecae6;
     --color-secondary-light-contrast: #0b1a2b;
-    --color-secondary-hover: #219ebc71;
+    --color-secondary-hover: hsl(192, 70%, 55%);
     --color-secondary-dark: #023047;
     --color-success: #2d9d78;
     --color-error: #d64545;

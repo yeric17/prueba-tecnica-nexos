@@ -1,4 +1,5 @@
-﻿using Application.Abstractions.Messaging;
+﻿using Application.Abstractions.Authentication;
+using Application.Abstractions.Messaging;
 using Application.Orders.CreateOrder;
 using Application.Orders.DeleteOrder;
 using Application.Orders.GetAllOrders;
@@ -39,11 +40,11 @@ namespace WebApi.Endpoints
                 .WithName("GetOrderById")
                 .Produces<OrderDto>(StatusCodes.Status200OK);
 
-            orders.MapGet("/user/{userId}", GetOrdersByUserId)
+            orders.MapGet("/user/me", GetOrdersByUserId)
                 .WithName("GetOrdersByUserId")
                 .Produces<List<OrderDto>>(StatusCodes.Status200OK);
 
-            orders.MapGet("/user/{userId}/products", GetUserProducts)
+            orders.MapGet("/user/me/products", GetUserProducts)
                 .WithName("GetUserProducts")
                 .Produces<List<OrderItemDto>>(StatusCodes.Status200OK);
 
@@ -52,10 +53,12 @@ namespace WebApi.Endpoints
 
         public static async Task<IResult> CreateOrder(
             ICommandHandler<CreateOrderCommand, Guid> handler,
+            IUserContext userContext,
             CreateOrderCommand command,
             CancellationToken cancellationToken
             )
         {
+            command.UserId = userContext.UserId;
             Result<Guid> result = await handler.Handle(command, cancellationToken);
 
             return result.Match(() => Results.Ok(new { Id = result.Value}), CustomResults.Problem);
@@ -96,20 +99,20 @@ namespace WebApi.Endpoints
 
         public static async Task<IResult> GetOrdersByUserId(
             IQueryHandler<GetOrdersByUserIdQuery, List<OrderDto>> handler,
-            Guid userId,
+            IUserContext userContext,
             CancellationToken cancellationToken)
         {
-            Result<List<OrderDto>> result = await handler.Handle(new GetOrdersByUserIdQuery { UserId = userId }, cancellationToken);
+            Result<List<OrderDto>> result = await handler.Handle(new GetOrdersByUserIdQuery { UserId = userContext.UserId }, cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);
         }
 
         public static async Task<IResult> GetUserProducts(
             IQueryHandler<GetUserProductsQuery, List<OrderItemDto>> handler,
-            Guid userId,
+            IUserContext userContext,
             CancellationToken cancellationToken)
         {
-            Result<List<OrderItemDto>> result = await handler.Handle(new GetUserProductsQuery { UserId = userId }, cancellationToken);
+            Result<List<OrderItemDto>> result = await handler.Handle(new GetUserProductsQuery { UserId = userContext.UserId }, cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);
         }

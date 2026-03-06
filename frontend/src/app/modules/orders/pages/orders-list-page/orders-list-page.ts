@@ -31,7 +31,6 @@ export class OrdersListPage {
 
   private buildPayOrderRequest(order: Order): PayOrderRequest {
     return {
-      userId: order.userId,
       orderId: order.id,
       amount: order.totalAmount,
       currency: 'COP', 

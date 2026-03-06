@@ -17,7 +17,12 @@
             </label>
         </div>
         <div class="auth-form__buttons">
-            <button class="button button-primary">Iniciar sesión</button>
+            <app-button 
+                [fullWidth]="true" 
+                type="submit" 
+                [isLoading]="isLoading()"
+                [disabled]="form.invalid"
+                 >Iniciar Sesión</app-button>
         </div>
         <p class="auth-form__helper">
             <span>¿No tienes una cuenta?</span>

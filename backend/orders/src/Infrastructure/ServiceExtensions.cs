@@ -1,4 +1,5 @@
 ﻿
+using Application.Abstractions.Authentication;
 using Application.Abstractions.Data;
 using Infrastructure.Authentication;
 using Infrastructure.Database;
@@ -39,7 +40,7 @@ public static class ServiceExtensions
 
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-
+        services.AddScoped<IUserContext, UserContext>();
         return services;
     }
 

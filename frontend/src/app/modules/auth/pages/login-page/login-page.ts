@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { LoginRequest } from '../../models/login.model';
 import { Subscription } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
+import { Button } from '../../../../shared/components/buttons/button/button';
 
 @Component({
   selector: 'app-login-page',
@@ -12,7 +13,8 @@ import { Router, RouterLink } from '@angular/router';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    Button
   ],
   templateUrl: './login-page.html',
   styleUrls: ['./login-page.css','../../styles/auth.styles.css'],

@@ -13,7 +13,7 @@ export class OrdersService {
     private readonly user = inject(AuthService).user;
 
     getOrders() {
-        return this.http.get<Order[]>(`${this.apiHost}/orders-service/orders/user/${this.user()?.id}`);
+        return this.http.get<Order[]>(`${this.apiHost}/orders-service/orders/user/me`);
     }
 
     payOrder(payOrderRequest: PayOrderRequest) {

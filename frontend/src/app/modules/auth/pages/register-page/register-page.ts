@@ -4,10 +4,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { RegisterFormModel } from '../../models/register.model';
 import { AuthService } from '../../services/auth.service';
+import { Button } from '../../../../shared/components/buttons/button/button';
 
 @Component({
   selector: 'app-register-page',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, Button],
   templateUrl: './register-page.html',
   styleUrls: ['./register-page.css','../../styles/auth.styles.css'],
   changeDetection: ChangeDetectionStrategy.OnPush

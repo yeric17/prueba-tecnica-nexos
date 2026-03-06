@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, signal, viewChild } from '@angular/core';
 import { Menu, MenuContent, MenuItem, MenuTrigger } from '@angular/aria/menu';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { AuthService } from '../../../modules/auth/services/auth.service';
 
 type Theme = 'light' | 'dark';
 
@@ -15,6 +16,7 @@ type Theme = 'light' | 'dark';
 export class UserMenu {
   private readonly document = inject(DOCUMENT);
   private readonly themeStorageKey = 'preferred-theme';
+  private readonly authService = inject(AuthService);
 
   protected readonly theme = signal<Theme>(this.getInitialTheme());
 
@@ -32,6 +34,10 @@ export class UserMenu {
 
   protected toggleTheme(): void {
     this.theme.update(mode => (mode === 'light' ? 'dark' : 'light'));
+  }
+
+  protected logout(): void {
+    this.authService.logout();
   }
 
   private getInitialTheme(): Theme {

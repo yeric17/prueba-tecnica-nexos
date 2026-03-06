@@ -28,7 +28,7 @@
         <span class="label">Tema {{ theme() === 'dark' ? 'claro' : 'oscuro' }}</span>
       </div>
       <div class="separator" role="presentation"></div>
-      <div ngMenuItem value="logout">
+      <div ngMenuItem value="logout" (click)="logout()">
         <span class="icon material-symbols-outlined" translate="no" aria-hidden="true">logout</span>
         <span class="label">Cerrar sesión</span>
       </div>
